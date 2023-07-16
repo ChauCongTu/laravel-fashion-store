@@ -1,0 +1,3 @@
+@php
+    dd($home)
+@endphp
