@@ -11,13 +11,30 @@ class Category extends Model
 {
     use HasFactory;
     public $fillable = [
-        'name', 'slug', 'summary', 'photo', 'parent_id', 'user_id'
+        'name', 'slug', 'type', 'summary', 'photo', 'parent_id', 'user_id'
     ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function products(): HasMany {
+    public function products(): HasMany
+    {
         return $this->hasMany(Product::class);
+    }
+    public function child(): HasMany
+    {
+        return $this->hasMany(Category::class, 'parent_id', 'id');
+    }
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+    public static function hasParent($category_id)
+    {
+        $a = Category::find($category_id);
+        if ($a->parent != null) {
+            return true;
+        }
+        return false;
     }
 }
