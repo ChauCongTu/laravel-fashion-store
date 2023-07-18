@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -33,9 +35,26 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $slug, int $id)
     {
-        //
+        $product = Product::with('photos', 'reviews', 'comments')
+            ->select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))
+            ->where('id', $id)
+            ->first();
+
+        $product->size = explode(', ', $product->size);
+        $product->color = explode(', ', $product->color);
+
+        $rel_prods = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))
+            ->where('id', '!=', $id)
+            ->where(function ($query) use ($product) {
+                $query->where('brand_id', $product->brand_id)
+                    ->orWhere('cat_id', $product->cat_id);
+            })
+            ->orderByRaw('(CASE WHEN brand_id = ? THEN 1 ELSE 2 END), (CASE WHEN cat_id = ? THEN 1 ELSE 2 END)', [$product->brand_id, $product->cat_id])
+            ->get();
+
+        return view('products.show', compact('product', 'rel_prods'));
     }
 
     /**
