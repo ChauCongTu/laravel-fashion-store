@@ -57,4 +57,28 @@ a,
   right: -25px;
 }
 
+.pagination .page-item {
+  display: block;
+  margin-right: 10px;
+}
+.pagination .page-item .page-link {
+  padding: 10px 18px;
+  background-color: #fff;
+  color: #333;
+  border-radius: 50%;
+  font-weight: bold;
+}
+.pagination .page-item a:hover {
+  color: #2980b9;
+  border-color: #2980b9;
+}
+.pagination .active .page-link {
+  border: none;
+  background-color: #2980b9;
+  color: #fff;
+}
+.pagination .disabled {
+  display: none;
+}
+
 /*# sourceMappingURL=app.css.map */

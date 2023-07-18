@@ -18,8 +18,8 @@ class HomeController extends Controller
         $slideBanners = Banner::where('type', 'slide')->orderBy('id', 'DESC')->limit(5)->get();
         $blockBanners = Banner::where('type', 'block')->orderBy('id', 'DESC')->limit(3)->get();
         $categories = Category::where('is_parent', 1)->get();
-        $products = Product::orderBy('id', 'DESC')->limit(16)->get();
-        $topSale = Product::select('*', DB::raw('(((price - discount)/price)*100) as percent_discount'))
+        $products = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))->orderBy('id', 'DESC')->limit(16)->get();
+        $topSale = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))
             ->where('discount', '!=', 0)
             ->orderBy('percent_discount', 'DESC')
             ->limit(10)

@@ -69,7 +69,7 @@
                             </li>
                             @if ($categories->count() > 0)
                                 <li>
-                                    <a href="product.html">Danh mục
+                                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục
                                         <span class="ms-1">
                                             <i class="fa fa-angle-down"></i>
                                         </span>
@@ -78,26 +78,26 @@
                                         @foreach ($categories as $category)
                                             @if ($category->child->count() > 0)
                                                 <li>
-                                                    <a href="">{{ $category->name }}
+                                                    <a href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}
                                                         <span class="float-end">
                                                             <i class="fa fa-angle-right"></i>
                                                         </span>
                                                     </a>
                                                     <ul class="sub-menu">
                                                         @foreach ($category->child as $child)
-                                                            <li><a href="">{{ $child->name }}</a></li>
+                                                            <li><a href="{{ route('category.show', ['slug' => $child->slug, 'id' => $child->id]) }}">{{ $child->name }}</a></li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
                                             @else
-                                                <li><a href="">{{ $category->name }}</a></li>
+                                                <li><a href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}</a></li>
                                             @endif
                                         @endforeach
                                     </ul>
                                 </li>
                             @else
                                 <li>
-                                    <a href="">Danh mục</a>
+                                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục</a>
                                 </li>
                             @endif
 
@@ -203,7 +203,7 @@
                 </li>
 
                 <li>
-                    <a href="product.html">Danh mục<span class="ms-1">
+                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục<span class="ms-1">
                             <i class="fa fa-angle-down"></i>
                         </span></a>
                 </li>
@@ -304,8 +304,14 @@
             </div>
         </div>
     </div>
-    {{-- Main Content --}}
+    {{-- =================================================
+    ||
+    ||
+    ||                MAIN CONTENT SECTION
+    ||
+    ||====================================================   --}}
     @yield('content')
+
     {{-- Footer --}}
     <footer class="bg3 p-t-75 p-b-32">
         <div class="container">
@@ -333,25 +339,25 @@
 
                     <ul>
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Track Order
+                            <a href="#" class="cl7 hov-cl1 trans-04">
+                                Hướng dẫn đặt hàng
                             </a>
                         </li>
 
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Returns
+                            <a href="#" class="cl7 hov-cl1 trans-04">
+                                Quy định đổi trả
                             </a>
                         </li>
 
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-                                Shipping
+                            <a href="#" class="cl7 hov-cl1 trans-04">
+                                Thông tin giao hàng
                             </a>
                         </li>
 
                         <li class="p-b-10">
-                            <a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+                            <a href="#" class="cl7 hov-cl1 trans-04">
                                 FAQs
                             </a>
                         </li>
@@ -363,9 +369,9 @@
                         GET IN TOUCH
                     </h4>
 
-                    <p class="stext-107 cl7 size-201">
-                        Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us
-                        on (+1) 96 716 6879
+                    <p class="cl7 size-201">
+                        Nếu có bất kỳ thắc mắc hoặc yêu cầu, liên hệ ngay với chúng tôi thông qua số điện thoại {{ $home->phone }}
+                        hoặc qua địa chỉ email {{ $home->email }}
                     </p>
 
                     <div class="p-t-27">
