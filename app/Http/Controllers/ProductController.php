@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CommentRequest;
+use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +47,8 @@ class ProductController extends Controller
         $product->size = explode(', ', $product->size);
         $product->color = explode(', ', $product->color);
 
+        session()->put('product_id', $id);
+
         $rel_prods = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))
             ->where('id', '!=', $id)
             ->where(function ($query) use ($product) {
@@ -55,6 +59,11 @@ class ProductController extends Controller
             ->get();
 
         return view('products.show', compact('product', 'rel_prods'));
+    }
+
+    public function comment(CommentRequest $request, int $reply_id = null)
+    {
+        
     }
 
     /**

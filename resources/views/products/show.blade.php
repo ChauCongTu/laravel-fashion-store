@@ -28,7 +28,8 @@
     </div>
     <div class="bg6 flex-c-m flex-w size-302 p-tb-15">
         <span class="stext-107 fw-bold cl6 p-lr-25">
-            CODE: <span id="code">{{ $product->code }}</span>  <button id="clipboard"><i class="fa fa-copy text-muted"></i></button>
+            CODE: <span id="code">{{ $product->code }}</span> <button id="clipboard"><i
+                    class="fa fa-copy text-muted"></i></button>
         </span>
     </div>
     <!-- Product Detail -->
@@ -194,20 +195,109 @@
             </div>
             <div class="m-t-20 p-b-40">
                 <div class="h3 fw-bold cl5">Đánh giá</div>
-                <div class="rating-list">
-
+                <div class="rating-list py-3">
+                    @foreach ($product->reviews as $review)
+                        <div class="d-flex align-items-content border p-3 py-4">
+                            <div class="img">
+                                <img src="{{ asset('storage/' . $review->user->photo) }}" class="rounded-circle border"
+                                    width="50px" height="50px" alt="ảnh đại diện">
+                            </div>
+                            <div class="ms-5">
+                                <div class="fw-bold cl5">
+                                    {{ $review->user->name }}
+                                    <div class="text-warning small">
+                                        @for ($i = 1; $i <= $review->rate; $i++)
+                                            <i class="fa fa-star"></i>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <div class="mt-1">
+                                    {{ $review->review }}
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <div class="m-t-20 p-b-40">
                 <div class="h3 fw-bold cl5">Nhận xét</div>
-                <div class="comment-list">
-
+                <div class="comment-list py-2">
+                    @foreach ($product->comments as $comment)
+                        @if ($comment->reply_id == null)
+                            <div class="d-flex align-items-content p-3 py-4 mt-2">
+                                <div class="img">
+                                    <img src="{{ asset('storage/' . $comment->user->photo) }}"
+                                        class="rounded-circle border" width="50px" height="50px" alt="ảnh đại diện">
+                                </div>
+                                <div class="content ms-4">
+                                    <div class="fw-bold cl5">
+                                        {{ $comment->user->name }}
+                                        <div class="small">
+                                            {{ date('d/m/Y', strtotime($comment->created_at)) }}
+                                        </div>
+                                    </div>
+                                    <div class="mt-1">
+                                        {{ $comment->content }}
+                                    </div>
+                                    <div class="mt-2"><a href="" data-bs-toggle="modal"
+                                            data-bs-target="#reply_{{ $comment->id }}">Trả lời</a></div>
+                                </div>
+                            </div>
+                            {{-- Comment level 2 --}}
+                            @foreach ($comment->child as $child)
+                                <div class="d-flex bg-light align-items-content p-3 py-4 ms-5">
+                                    <div class="img">
+                                        <img src="{{ asset('storage/' . $child->user->photo) }}"
+                                            class="rounded-circle border" width="50px" height="50px"
+                                            alt="ảnh đại diện">
+                                    </div>
+                                    <div class="ms-4">
+                                        <div class="fw-bold cl5">
+                                            {{ $child->user->name }} <span class="fw-normal"> Đã phản hồi
+                                                {{ $comment->user->name }}</span>
+                                            <div class="small">
+                                                {{ date('d/m/Y', strtotime($child->created_at)) }}
+                                            </div>
+                                        </div>
+                                        <div class="mt-1">
+                                            {{ $child->content }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            <!-- Modal -->
+                            <div class="modal fade m-t-100" id="reply_{{ $comment->id }}" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="{{ route('product.comment', ['reply_id' => $comment->id]) }}">
+                                            <div class="modal-header">
+                                                <h5>Phản hồi {{ $comment->user->name }}</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="border-start border-4 reply-content ps-2 mb-2">
+                                                    {{ $comment->content }}</div>
+                                                <textarea name="content" class="form-control" rows="4"></textarea>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Đóng</button>
+                                                <button type="submit" class="btn btn-primary">Trả lời</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
         </div>
     </section>
 
-    <hr/>
+    <hr />
     <!-- Related Products -->
     <section class="sec-relate-product bg0 p-t-45 p-b-105">
         <div class="container">

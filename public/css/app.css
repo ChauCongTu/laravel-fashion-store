@@ -81,4 +81,14 @@ a,
   display: none;
 }
 
+.reply-content {
+  overflow: hidden;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  width: 100%;
+  margin: 10px 0;
+}
+
 /*# sourceMappingURL=app.css.map */

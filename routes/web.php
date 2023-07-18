@@ -21,3 +21,5 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/{slug}-{id}.cat', [CategoriesController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('category.show');
 
 Route::get('/{slug}-{id}', [ProductController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('product.show');
+
+Route::post('/comment_rep={reply_id?}', [ProductController::class, 'comment'])->name('product.comment');
