@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/font-awesome-4.7.0/css/font-awesome.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/iconic/css/material-design-iconic-font.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('fonts/linearicons-v1.0.0/icon-font.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animate/animate.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/css-hamburgers/hamburgers.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('vendor/animsition/css/animsition.min.css') }}">
@@ -45,10 +46,6 @@
                         <a href="tel:{{ $home->phone }}" class="flex-c-m trans-04 p-lr-25">
                             {{ $home->phone }}
                         </a>
-
-                        <a href="#" class="flex-c-m trans-04 p-lr-25">
-                            Tài khoản
-                        </a>
                     </div>
                 </div>
             </div>
@@ -78,26 +75,32 @@
                                         @foreach ($categories as $category)
                                             @if ($category->child->count() > 0)
                                                 <li>
-                                                    <a href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}
+                                                    <a
+                                                        href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}
                                                         <span class="float-end">
                                                             <i class="fa fa-angle-right"></i>
                                                         </span>
                                                     </a>
                                                     <ul class="sub-menu">
                                                         @foreach ($category->child as $child)
-                                                            <li><a href="{{ route('category.show', ['slug' => $child->slug, 'id' => $child->id]) }}">{{ $child->name }}</a></li>
+                                                            <li><a
+                                                                    href="{{ route('category.show', ['slug' => $child->slug, 'id' => $child->id]) }}">{{ $child->name }}</a>
+                                                            </li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
                                             @else
-                                                <li><a href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}</a></li>
+                                                <li><a
+                                                        href="{{ route('category.show', ['slug' => $category->slug, 'id' => $category->id]) }}">{{ $category->name }}</a>
+                                                </li>
                                             @endif
                                         @endforeach
                                     </ul>
                                 </li>
                             @else
                                 <li>
-                                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục</a>
+                                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh
+                                        mục</a>
                                 </li>
                             @endif
 
@@ -131,11 +134,35 @@
                             <i class="zmdi zmdi-shopping-cart"></i>
                         </div>
 
-                        <a href="#"
-                            class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti"
-                            data-notify="0">
-                            <i class="zmdi zmdi-favorite-outline"></i>
-                        </a>
+                        @if (Auth::check())
+                            <div class="dropdown">
+                                <a href="" class="flex-c-m cl2 hov-cl1 trans-04 p-lr-25"
+                                    data-bs-toggle="dropdown">
+                                    {{ Auth::user()->name }} <span class="ms-1">
+                                        <i class="fa fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item py-2" href="#"><i
+                                                class="fa-solid fa-user me-3"></i>Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item py-2" href="#"><i
+                                                class="fa-solid fa-clipboard me-3"></i>Quản lý đơn hàng</a></li>
+                                    <li><a class="dropdown-item py-2" href="#"><i
+                                                class="fa fa-heart me-3"></i>Wishlist</a></li>
+                                    @if (Auth::user()->role == 'admin')
+                                        <li><a class="dropdown-item py-2" href="#"><i
+                                                    class="fa fa-gears me-3"></i>Bảng điều khiển</a></li>
+                                    @endif
+                                    <div class="border my-2"></div>
+                                    <li><a class="dropdown-item py-2" href="{{ route('logout') }}"><i
+                                                class="fa-solid fa-right-from-bracket me-3"></i>Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        @else
+                            <a href="{{ route('login') }}" class="flex-c-m cl2 hov-cl1 trans-04 p-lr-25">
+                                Tài khoản
+                            </a>
+                        @endif
                     </div>
                 </nav>
             </div>
@@ -190,9 +217,27 @@
                             {{ $home->email }}
                         </a>
 
-                        <a href="#" class="flex-c-m p-lr-10 trans-04">
-                            Tài khoản
-                        </a>
+                        @if (Auth::check())
+                            <div class="dropdown">
+                                <a href="" class="flex-c-m cl2 hov-cl1 trans-04 p-lr-25"
+                                    data-bs-toggle="dropdown">
+                                    {{ Auth::user()->name }} <span class="ms-1">
+                                        <i class="fa fa-angle-down"></i>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item py-2" href="#">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item py-2" href="#">Quản lý đơn hàng</a></li>
+                                    <li><a class="dropdown-item py-2" href="#">Wishlist</a></li>
+                                    <div class="border my-2"></div>
+                                    <li><a class="dropdown-item py-2" href="#">Đăng xuất</a></li>
+                                </ul>
+                            </div>
+                        @else
+                            <a href="{{ route('login') }}" class="flex-c-m trans-04 p-lr-25">
+                                Tài khoản
+                            </a>
+                        @endif
                     </div>
                 </li>
             </ul>
@@ -203,7 +248,8 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục<span class="ms-1">
+                    <a href="{{ route('category.show', ['slug' => 'danh-muc', 'id' => 1]) }}">Danh mục<span
+                            class="ms-1">
                             <i class="fa fa-angle-down"></i>
                         </span></a>
                 </li>
@@ -286,18 +332,18 @@
 
                 <div class="w-full">
                     <div class="header-cart-total w-full p-tb-40">
-                        Total: $75.00
+                        Tạm tính: {{ Session::has('cart') ? Sesssion::get('cart')['total'] : '0đ' }}
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
                         <a href="shoping-cart.html"
-                            class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
-                            View Cart
+                            class="flex-c-m  cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+                            Giỏ hàng
                         </a>
 
                         <a href="shoping-cart.html"
-                            class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
-                            Check Out
+                            class="flex-c-m cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+                            Thanh toán
                         </a>
                     </div>
                 </div>
@@ -312,7 +358,12 @@
     ||====================================================   --}}
     @yield('content')
 
-    {{-- Footer --}}
+    {{-- =================================================
+    ||
+    ||
+    ||              END MAIN CONTENT SECTION
+    ||
+    ||====================================================   --}}
     <footer class="bg3 p-t-75 p-b-32">
         <div class="container">
             <div class="row">
@@ -370,7 +421,8 @@
                     </h4>
 
                     <p class="cl7 size-201">
-                        Nếu có bất kỳ thắc mắc hoặc yêu cầu, liên hệ ngay với chúng tôi thông qua số điện thoại {{ $home->phone }}
+                        Nếu có bất kỳ thắc mắc hoặc yêu cầu, liên hệ ngay với chúng tôi thông qua số điện thoại
+                        {{ $home->phone }}
                         hoặc qua địa chỉ email {{ $home->email }}
                     </p>
 
@@ -396,8 +448,8 @@
 
                     <form>
                         <div class="wrap-input1 w-full p-b-4">
-                            <input class="input1 bg-none plh1 stext-107 cl7 form-control" type="text" name="email"
-                                placeholder="email@example.com">
+                            <input class="input1 bg-none plh1 stext-107 cl7 form-control" type="text"
+                                name="email" placeholder="email@example.com">
                             <div class="focus-input1 trans-04"></div>
                         </div>
 
@@ -434,7 +486,8 @@
                 </div>
 
                 <p class="stext-107 cl6 txt-center">
-                    Copyright &copy; {{ date('Y') }} <a href="#" target="_blank">{{ $home->logo }}</a> | Design & Developer by <a href="https://facebook.com/xoxvp">ChauCongTu</a>
+                    Copyright &copy; {{ date('Y') }} <a href="#" target="_blank">{{ $home->logo }}</a> |
+                    Design & Developer by <a href="https://facebook.com/xoxvp">ChauCongTu</a>
                 </p>
             </div>
         </div>
@@ -623,6 +676,7 @@
     <script src="{{ asset('vendor/animsition/js/animsition.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/popper.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('vendor/select2/select2.min.js') }}"></script>
     <script>
         $(".js-select2").each(function() {
