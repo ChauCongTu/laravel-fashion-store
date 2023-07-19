@@ -224,53 +224,63 @@
                 <div class="comment-list py-2">
                     @foreach ($product->comments as $comment)
                         @if ($comment->reply_id == null)
-                            <div class="d-flex align-items-content p-3 py-4 mt-2">
-                                <div class="img">
-                                    <img src="{{ asset('storage/' . $comment->user->photo) }}"
-                                        class="rounded-circle border" width="50px" height="50px" alt="ảnh đại diện">
-                                </div>
-                                <div class="content ms-4">
-                                    <div class="fw-bold cl5">
-                                        {{ $comment->user->name }}
-                                        <div class="small">
-                                            {{ date('d/m/Y', strtotime($comment->created_at)) }}
-                                        </div>
-                                    </div>
-                                    <div class="mt-1">
-                                        {{ $comment->content }}
-                                    </div>
-                                    <div class="mt-2"><a href="" data-bs-toggle="modal"
-                                            data-bs-target="#reply_{{ $comment->id }}">Trả lời</a></div>
-                                </div>
-                            </div>
-                            {{-- Comment level 2 --}}
-                            @foreach ($comment->child as $child)
-                                <div class="d-flex bg-light align-items-content p-3 py-4 ms-5">
+                            <div class="border-bottom border-top pb-2">
+                                <div class="d-flex align-items-content p-3 py-4 mt-2">
                                     <div class="img">
-                                        <img src="{{ asset('storage/' . $child->user->photo) }}"
+                                        <img src="{{ asset('storage/' . $comment->user->photo) }}"
                                             class="rounded-circle border" width="50px" height="50px"
                                             alt="ảnh đại diện">
                                     </div>
-                                    <div class="ms-4">
+                                    <div class="content ms-4">
                                         <div class="fw-bold cl5">
-                                            {{ $child->user->name }} <span class="fw-normal"> Đã phản hồi
-                                                {{ $comment->user->name }}</span>
+                                            <span class="text-primary">
+                                                {{ $comment->user->name }}
+                                            </span>
                                             <div class="small">
-                                                {{ date('d/m/Y', strtotime($child->created_at)) }}
+                                                {{ date('d/m/Y', strtotime($comment->created_at)) }}
                                             </div>
                                         </div>
                                         <div class="mt-1">
-                                            {{ $child->content }}
+                                            {{ $comment->content }}
                                         </div>
+                                        <div class="mt-2"><a href="" data-bs-toggle="modal"
+                                                data-bs-target="#reply_{{ $comment->id }}">Trả lời</a></div>
                                     </div>
                                 </div>
-                            @endforeach
+                                {{-- Comment level 2 --}}
+                                @foreach ($comment->child as $child)
+                                    <div class="d-flex bg-light rounded-3 shadow align-items-content p-3 py-4 ms-5">
+                                        <div class="img">
+                                            <img src="{{ asset('storage/' . $child->user->photo) }}"
+                                                class="rounded-circle border" width="50px" height="50px"
+                                                alt="ảnh đại diện">
+                                        </div>
+                                        <div class="ms-4">
+                                            <div class="fw-bold cl5">
+                                                <span class="text-primary">
+                                                    {{ $child->user->name }}
+                                                </span>
+                                                <span class="fw-normal"> Đã phản hồi
+                                                    {{ $comment->user->name }}</span>
+                                                <div class="small">
+                                                    {{ date('d/m/Y', strtotime($child->created_at)) }}
+                                                </div>
+                                            </div>
+                                            <div class="mt-1">
+                                                {{ $child->content }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                             <!-- Modal -->
                             <div class="modal fade m-t-100" id="reply_{{ $comment->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="{{ route('product.comment', ['reply_id' => $comment->id]) }}">
+                                        <form
+                                            action="{{ route('product.comment', ['reply_id' => $comment->id]) }}#comment_sec"
+                                            method="POST">
                                             <div class="modal-header">
                                                 <h5>Phản hồi {{ $comment->user->name }}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
@@ -280,6 +290,7 @@
                                                 <div class="border-start border-4 reply-content ps-2 mb-2">
                                                     {{ $comment->content }}</div>
                                                 <textarea name="content" class="form-control" rows="4"></textarea>
+                                                @csrf
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -293,10 +304,26 @@
                         @endif
                     @endforeach
                 </div>
+                @if (Auth::check())
+                    <div class="leave-comment mt-3 border rounded-3 p-3 bg-light" id="comment-sec">
+                        <form action="{{ route('product.comment') }}#comment-sec" method="post">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="content" class="h3 cl5">Nội dung bình luận:</label>
+                                <textarea name="content" class="form-control" rows="5">{{ old('content') }}</textarea>
+                                @error('content')
+                                    <div class="text-danger">* {{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-3 d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-5 py-2 rounded-4">Gửi</button>
+                            </div>
+                        </form>
+                    </div>
+                @endif
             </div>
         </div>
     </section>
-
     <hr />
     <!-- Related Products -->
     <section class="sec-relate-product bg0 p-t-45 p-b-105">

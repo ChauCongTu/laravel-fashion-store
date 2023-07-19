@@ -6,6 +6,7 @@ use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -63,7 +64,23 @@ class ProductController extends Controller
 
     public function comment(CommentRequest $request, int $reply_id = null)
     {
-        
+        if ($reply_id == null){
+            $comment = new Comment();
+            $comment->user_id = Auth::id();
+            $comment->product_id = session()->get('product_id');
+            $comment->content = $request->content;
+            $comment->save();
+            return back();
+        }
+        else {
+            $comment = new Comment();
+            $comment->user_id = Auth::id();
+            $comment->product_id = session()->get('product_id');
+            $comment->content = $request->content;
+            $comment->reply_id = $reply_id;
+            $comment->save();
+            return back();
+        }
     }
 
     /**
