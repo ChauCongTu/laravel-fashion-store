@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coupon;
+use App\Models\CouponUsed;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -9,6 +11,75 @@ use Illuminate\Support\Facades\DB;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        $cart = session()->get('cart');
+        return view('cart.index', compact('cart'));
+    }
+    public function updateCart(Request $request)
+    {
+        $cart = session()->get('cart');
+        $quantity = $request->quantity;
+        if ($quantity > 0) {
+            $cart['products'][$request->id]['quantity'] = $quantity;
+            $cart['products'][$request->id]['total_price'] = $cart['products'][$request->id]['price'] * $cart['products'][$request->id]['quantity'];
+            $cart['coupon'] = 0;
+        } else {
+            unset($cart['products'][$request->id]);
+            $cart['coupon'] = 0;
+        }
+        $cart['total'] = 0;
+        foreach ($cart['products'] as $item) {
+            $cart['total'] = $cart['total'] + $item['total_price'];
+        }
+        $cart['final_price'] = $cart['total'];
+        session()->put('cart', $cart);
+        session()->save();
+        return redirect()->back()->with('msg', 'Cập nhật giỏ hàng thành công');
+    }
+    public function applyCoupon(Request $request)
+    {
+        $cart = session()->get('cart');
+        $request->coupon;
+        if ($request->coupon == null)
+            return redirect()->back()->with('error', 'Bạn chưa nhập mã giảm giá');
+        $coupon = Coupon::where('code', $request->coupon)->first();
+        if ($coupon == null)
+            return redirect()->back()->with('error', 'Mã giảm giá không tồn tại');
+        if ($coupon->usage_limit <= $coupon->usage_used)
+            return redirect()->back()->with('error', 'Mã giảm giá đã hết lượt sử dụng');
+        if (date('Y-m-d H:i:s') < date('Y-m-d H:i:s', strtotime($coupon->expired)) || $coupon->expired == null) {
+            if (CouponUsed::where('user_id', Auth::id())->where('coupon', $request->coupon)->count() > 0) {
+                return redirect()->back()->with('error', 'Bạn đã sử dụng mã giảm giá này rồi');
+            }
+            if ($coupon->type == 'price') {
+                $cart['coupon'] = $coupon->value;
+                $cart['final_price'] = $cart['total'] - $coupon->value;
+            } else {
+                $cart['coupon'] = $cart['total'] * ($coupon->value);
+                $cart['final_price'] = $cart['total'] - $cart['coupon'];
+            }
+            $coupon->update([
+                'usage_used' => $coupon->usage_used + 1,
+            ]);
+            $used = new CouponUsed();
+            $used->user_id = Auth::id();
+            $used->coupon = $request->coupon;
+            $used->save();
+            session()->put('cart', $cart);
+            session()->save();
+            return redirect()->back();
+        } else {
+            return redirect()->back()->with('error', 'Mã giảm giá đã hết hạn');
+        }
+    }
+    public function order(Request $request)
+    {
+        dd($request);
+    }
+    public function checkout()
+    {
+    }
     public function addToCart(int $product_id, Request $request)
     {
         $quantity = $request->quantity != null ? $request->quantity : 1;
@@ -27,6 +98,8 @@ class CartController extends Controller
                     'photo' => $product->photo,
                     'slug' => $product->slug,
                     'quantity' => $quantity,
+                    'size' => 'M',
+                    'color' => 'Trắng',
                     'price' => $product->product_price
                 ];
                 $cart['products'][$product_id]['total_price'] = $cart['products'][$product_id]['price'] * $cart['products'][$product_id]['quantity'];
@@ -34,8 +107,8 @@ class CartController extends Controller
         } else {
             $cart = [
                 'user_id' => Auth::id(),
-                'code' => 'CART-' . Auth::id() . '-' . date('Hisdmy'),
-                'coupon' => null,
+                'code' => 'CART-U' . Auth::id() . '-' . date('Hisdmy'),
+                'coupon' => 0,
                 'total' => 0,
                 'products' => [
                     $product_id => [
@@ -44,6 +117,8 @@ class CartController extends Controller
                         'photo' => $product->photo,
                         'slug' => $product->slug,
                         'quantity' => $quantity,
+                        'size' => 'M',
+                        'color' => 'Trắng',
                         'price' => $product->product_price
                     ]
                 ],
@@ -54,6 +129,7 @@ class CartController extends Controller
         foreach ($cart['products'] as $item) {
             $cart['total'] = $cart['total'] + $item['total_price'];
         }
+        $cart['final_price'] = $cart['total'];
         session()->put('cart', $cart);
         session()->save();
         return redirect()->back()->with('msg', 'Thêm vào giỏ hàng thành công');

@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Coupon extends Model
+class CouponUsed extends Model
 {
     use HasFactory;
+    protected $table = 'coupon_used';
     public $fillable = [
-        'code', 'type', 'value', 'usage_limit', 'usage_used'
+        'user_id', 'coupon_id'
     ];
 }

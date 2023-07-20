@@ -36,12 +36,15 @@ Route::post('/dang-ky', [RegisterController::class, 'handle'])->name('register')
 // Route::post('/quen-mat-khau', [ResetPasswordController::class, 'postReset'])->name('reset');
 Route::get('/logout', function () {
     auth()->logout();
-    Session()->flush();
 
     return redirect(route('home'));
 })->name('logout');
 
+Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
 Route::post('/them-vao-gio-hang/{product_id}', [CartController::class, 'addToCart'])->name('cart.add');
-Route::get('/destroy-cart', function() {
+Route::post('/cap-nhat-gio-hang', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('/ap-dung-coupon', [CartController::class, 'applyCoupon'])->middleware('login')->name('cart.coupon');
+Route::get('/destroy-cart', function () {
     session()->forget('cart');
-});
+    return redirect()->back()->with('msg', 'Hủy bỏ giỏ hàng thành công');
+})->name('cart.destroy');
