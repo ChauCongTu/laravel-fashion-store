@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,8 @@ Route::get('/dang-nhap', [LoginController::class, 'login'])->name('login');
 Route::post('/dang-nhap', [LoginController::class, 'handle'])->name('login');
 Route::get('/dang-ky', [RegisterController::class, 'register'])->name('register');
 Route::post('/dang-ky', [RegisterController::class, 'handle'])->name('register');
+// Route::get('/quen-mat-khau', [ResetPasswordController::class, 'getReset'])->name('reset');
+// Route::post('/quen-mat-khau', [ResetPasswordController::class, 'postReset'])->name('reset');
 Route::get('/logout', function () {
     auth()->logout();
     Session()->flush();
@@ -38,4 +41,7 @@ Route::get('/logout', function () {
     return redirect(route('home'));
 })->name('logout');
 
-Route::get('/them-vao-gio-hang/{product_id?}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/them-vao-gio-hang/{product_id}', [CartController::class, 'addToCart'])->name('cart.add');
+Route::get('/destroy-cart', function() {
+    session()->forget('cart');
+});

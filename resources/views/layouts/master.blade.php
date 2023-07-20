@@ -311,16 +311,17 @@
                         @foreach (Session::get('cart')['products'] as $product)
                             <li class="header-cart-item flex-w flex-t m-b-12">
                                 <div class="header-cart-item-img">
-                                    <img src="images/item-cart-01.jpg" alt="IMG">
+                                    <img src="{{ asset('storage/' . $product['photo']) }}" alt="ảnh sản phẩm">
                                 </div>
 
                                 <div class="header-cart-item-txt p-t-8">
-                                    <a href="#" class="mb-3 link-product hov-cl1 trans-04">
+                                    <a href="{{ route('product.show', ['slug' => $product['slug'], 'id' => $product['id']]) }}"
+                                        class="mb-3 link-product hov-cl1 trans-04">
                                         {{ $product['name'] }}
                                     </a>
 
                                     <span class="header-cart-item-info">
-                                        1 x {{ $product['price'] }}
+                                        {{ $product['quantity'] }} x {{ number_format($product['price'], 0, ",", ".") }}đ
                                     </span>
                                 </div>
                             </li>
@@ -332,7 +333,7 @@
 
                 <div class="w-full">
                     <div class="header-cart-total w-full p-tb-40">
-                        Tạm tính: {{ Session::has('cart') ? Sesssion::get('cart')['total'] : '0đ' }}
+                        Tạm tính: {{ Session::has('cart') ? number_format(Session::get('cart')['total'], 0, ",", ".") : number_format(0, 0, ",", ".") }}đ
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -350,6 +351,24 @@
             </div>
         </div>
     </div>
+    @if (\Session::has('msg'))
+        <div class="message-custom trans-04 shadow">
+            <div class="card card-success" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="card-body py-4">
+                    <div class="text-center">
+                        <img src="{{ asset('images/check.gif') }}" class="w-25" width="100px">
+                    </div>
+                    <div class="text-center py-3">
+                        {!! \Session::get('msg') !!}
+                    </div>
+                </div>
+                <div class="p-3">
+                    <button type="button" class="btn btn-success float-end" id="closeMsg">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- =================================================
     ||
     ||
@@ -704,6 +723,13 @@
                     enabled: true
                 },
                 mainClass: 'mfp-fade'
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#closeMsg').click(function() {
+                $('.message-custom').hide();
             });
         });
     </script>
