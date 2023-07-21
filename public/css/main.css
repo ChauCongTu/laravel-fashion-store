@@ -3290,6 +3290,10 @@ input.num-product::-webkit-inner-spin-button {
     color: #717fe0;
 }
 
+.hov-cl13:hover {
+    color: #c23616;
+}
+
 .hov-bg1:hover {
     background-color: #717fe0;
 }
