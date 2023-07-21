@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class CategoriesController extends Controller
@@ -49,7 +51,11 @@ class CategoriesController extends Controller
         $totalProduct = Product::whereIn('cat_id', $category_id)->count();
         $products = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))
             ->whereIn('cat_id', $category_id)->limit(16)->get();
-
+        $wl = Wishlist::select('product_id')->where('user_id', Auth::id())->get();
+        $wishlist = [];
+        foreach ($wl as $item) {
+            $wishlist[$item->product_id] = 0;
+        }
         if ($request->priceMin != null && $request->priceMax != null) {
             $priceMin = $request->priceMin;
             $priceMax = $request->priceMax;
@@ -76,7 +82,7 @@ class CategoriesController extends Controller
             $products = $products->sortBy('display_price')->values()->all();
         }
 
-        return view('categories.show', compact('category', 'products', 'totalProduct', 'price', 'sortBy', 'priceMin', 'priceMax'));
+        return view('categories.show', compact('category', 'products', 'totalProduct', 'price', 'sortBy', 'priceMin', 'priceMax', 'wishlist'));
     }
 
     /**

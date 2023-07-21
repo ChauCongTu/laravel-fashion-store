@@ -160,12 +160,23 @@
                                     </div>
 
                                     <div class="block2-txt-child2 flex-r p-t-3">
-                                        <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                            <img class="icon-heart1 dis-block trans-04"
-                                                src="images/icons/icon-heart-01.png" alt="ICON">
-                                            <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                                src="images/icons/icon-heart-02.png" alt="ICON">
-                                        </a>
+                                        @if (isset($wishlist[$product->id]))
+                                            <form action="{{ route('wishlist.destroy', ['product_id' => $product->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="cl13 hov-cl1 trans-04"><i
+                                                        class="fa-solid fa-heart"></i></button>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('wishlist.add', ['product_id' => $product->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                <button type="submit" class="cl13 hov-cl1 trans-04"><i
+                                                        class="fa-regular fa-heart"></i></button>
+
+                                            </form>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

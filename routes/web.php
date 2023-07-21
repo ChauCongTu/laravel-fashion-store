@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,3 +50,9 @@ Route::get('/destroy-cart', function () {
     session()->forget('cart');
     return redirect()->back()->with('msg', 'Hủy bỏ giỏ hàng thành công');
 })->name('cart.destroy');
+
+Route::prefix('wishlist')->middleware('login')->group(function() {
+    Route::get('/', [WishlistController::class, 'index'])->name('wishlist');
+    Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'store'])->name('wishlist.add');
+    Route::delete('/remove-from-wishlist/{product_id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
+});

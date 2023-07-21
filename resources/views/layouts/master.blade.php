@@ -147,7 +147,7 @@
                                                 class="fa-solid fa-user me-3"></i>Thông tin cá nhân</a></li>
                                     <li><a class="dropdown-item py-2" href="#"><i
                                                 class="fa-solid fa-clipboard me-3"></i>Quản lý đơn hàng</a></li>
-                                    <li><a class="dropdown-item py-2" href="#"><i
+                                    <li><a class="dropdown-item py-2" href="{{ route('wishlist') }}"><i
                                                 class="fa fa-heart me-3"></i>Wishlist</a></li>
                                     @if (Auth::user()->role == 'admin')
                                         <li><a class="dropdown-item py-2" href="#"><i
@@ -321,7 +321,8 @@
                                     </a>
 
                                     <span class="header-cart-item-info">
-                                        {{ $product['quantity'] }} x {{ number_format($product['price'], 0, ",", ".") }}đ
+                                        {{ $product['quantity'] }} x
+                                        {{ number_format($product['price'], 0, ',', '.') }}đ
                                     </span>
                                 </div>
                             </li>
@@ -333,7 +334,8 @@
 
                 <div class="w-full">
                     <div class="header-cart-total w-full p-tb-40">
-                        Tạm tính: {{ Session::has('cart') ? number_format(Session::get('cart')['total'], 0, ",", ".") : number_format(0, 0, ",", ".") }}đ
+                        Tạm tính:
+                        {{ Session::has('cart') ? number_format(Session::get('cart')['total'], 0, ',', '.') : number_format(0, 0, ',', '.') }}đ
                     </div>
 
                     <div class="header-cart-buttons flex-w w-full">
@@ -364,6 +366,23 @@
                 </div>
                 <div class="p-3">
                     <button type="button" class="btn btn-success float-end" id="closeMsg">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if (\Session::has('error'))
+        <div class="message-custom trans-04 shadow">
+            <div class="card card-success px-5" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="card-body">
+                    <div class="text-center">
+                        <img src="{{ asset('images/error.gif') }}" class="w-50" width="100px">
+                    </div>
+                    <div class="text-center py-3">
+                        {!! \Session::get('error') !!}
+                    </div>
+                </div>
+                <div class="p-3 d-flex justify-content-center">
+                    <button type="button" class="btn btn-danger" id="closeMsg">Xác nhận</button>
                 </div>
             </div>
         </div>
