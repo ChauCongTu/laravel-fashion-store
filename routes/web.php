@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
@@ -45,13 +46,14 @@ Route::get('/gio-hang', [CartController::class, 'index'])->name('cart');
 Route::post('/them-vao-gio-hang/{product_id}', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cap-nhat-gio-hang', [CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/ap-dung-coupon', [CartController::class, 'applyCoupon'])->middleware('login')->name('cart.coupon');
-Route::post('/thanh-toan', [CartController::class, 'checkout'])->middleware('login')->name('cart.checkout');
+Route::get('/thanh-toan', [CheckoutController::class, 'getCheckout'])->middleware('login')->name('cart.checkout');
+Route::post('/thanh-toan', [CheckoutController::class, 'postCheckout'])->middleware('login')->name('cart.checkout');
 Route::get('/destroy-cart', function () {
     session()->forget('cart');
     return redirect()->back()->with('msg', 'Hủy bỏ giỏ hàng thành công');
 })->name('cart.destroy');
 
-Route::prefix('wishlist')->middleware('login')->group(function() {
+Route::prefix('wishlist')->middleware('login')->group(function () {
     Route::get('/', [WishlistController::class, 'index'])->name('wishlist');
     Route::post('/add-to-wishlist/{product_id}', [WishlistController::class, 'store'])->name('wishlist.add');
     Route::delete('/remove-from-wishlist/{product_id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');

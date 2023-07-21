@@ -805,6 +805,7 @@
             })
         });
     </script>
+    @yield('script')
     <script src="{{ asset('js/slick-custom.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 

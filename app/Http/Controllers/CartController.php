@@ -53,11 +53,13 @@ class CartController extends Controller
                 return redirect()->back()->with('error', 'Bạn đã sử dụng mã giảm giá này rồi');
             }
             if ($coupon->type == 'price') {
-                $cart['coupon'] = $coupon->value;
+                $discount = $coupon->value;
+                $cart['coupon'] += $discount;
                 $cart['final_price'] = $cart['final_price'] - $coupon->value;
             } else {
-                $cart['coupon'] = $cart['final_price'] * ($coupon->value / 100);
-                $cart['final_price'] = $cart['final_price'] - $cart['coupon'];
+                $discount = $cart['final_price'] * ($coupon->value / 100);
+                $cart['coupon'] += $discount;
+                $cart['final_price'] = $cart['final_price'] - $discount;
             }
             $coupon->update([
                 'usage_used' => $coupon->usage_used + 1,

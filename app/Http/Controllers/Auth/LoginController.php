@@ -27,10 +27,9 @@ class LoginController extends Controller
                 'password.required' => 'Vui lòng nhập mật khẩu'
             ]
         );
-        if (User::where('email', $request->email)->count() > 0) {
-            $userHasEmail = User::where('email', $request->email)->first();
-            if (Hash::check($request->password, $userHasEmail->password)) {
-                $user = User::find(1);
+        $user = User::where('email', $request->email)->first();
+        if ($user != null) {
+            if (Hash::check($request->password, $user->password)) {
                 Auth::login($user);
                 return redirect(route('home'));
             } else {
