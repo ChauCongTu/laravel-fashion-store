@@ -47,7 +47,6 @@ class ProductController extends Controller
 
         $product->size = explode(', ', $product->size);
         $product->color = explode(', ', $product->color);
-
         session()->put('product_id', $id);
 
         $rel_prods = Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))

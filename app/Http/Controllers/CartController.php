@@ -54,10 +54,10 @@ class CartController extends Controller
             }
             if ($coupon->type == 'price') {
                 $cart['coupon'] = $coupon->value;
-                $cart['final_price'] = $cart['total'] - $coupon->value;
+                $cart['final_price'] = $cart['final_price'] - $coupon->value;
             } else {
-                $cart['coupon'] = $cart['total'] * ($coupon->value);
-                $cart['final_price'] = $cart['total'] - $cart['coupon'];
+                $cart['coupon'] = $cart['final_price'] * ($coupon->value / 100);
+                $cart['final_price'] = $cart['final_price'] - $cart['coupon'];
             }
             $coupon->update([
                 'usage_used' => $coupon->usage_used + 1,
@@ -98,8 +98,8 @@ class CartController extends Controller
                     'photo' => $product->photo,
                     'slug' => $product->slug,
                     'quantity' => $quantity,
-                    'size' => 'M',
-                    'color' => 'Trắng',
+                    'size' => $request->size != null ? $request->size : 'M',
+                    'color' => $request->color != null ? $request->color : 'Mặc định',
                     'price' => $product->product_price
                 ];
                 $cart['products'][$product_id]['total_price'] = $cart['products'][$product_id]['price'] * $cart['products'][$product_id]['quantity'];
@@ -117,8 +117,8 @@ class CartController extends Controller
                         'photo' => $product->photo,
                         'slug' => $product->slug,
                         'quantity' => $quantity,
-                        'size' => 'M',
-                        'color' => 'Trắng',
+                        'size' => $request->size != null ? $request->size : 'M',
+                        'color' => $request->color != null ? $request->color : 'Mặc định',
                         'price' => $product->product_price
                     ]
                 ],

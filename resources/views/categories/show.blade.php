@@ -139,15 +139,20 @@
                                     data-label="{{ strtoupper($product->status) }}">
                                     <img src="{{ asset('storage/' . $product->photo) }}" alt="IMG-PRODUCT">
 
-                                    <a href="#"
-                                        class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        <i class="fa fa-cart-shopping"></i> Thêm vào giỏ hàng
-                                    </a>
+                                    <form action="{{ route('cart.add', ['product_id' => $product->id]) }}"
+                                        method="post">
+                                        @csrf
+                                        <button type="submit"
+                                            class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                            <i class="fa fa-cart-shopping me-2"></i> Thêm vào giỏ hàng
+                                        </button>
+                                    </form>
                                 </div>
 
                                 <div class="block2-txt flex-w flex-t p-t-14">
                                     <div class="block2-txt-child1 flex-col-l ">
-                                        <a href="{{ route('product.show', ['slug' => $product->slug, 'id' => $product->id]) }}" class="cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                        <a href="{{ route('product.show', ['slug' => $product->slug, 'id' => $product->id]) }}"
+                                            class="cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                             {{ $product->name }}
                                         </a>
 

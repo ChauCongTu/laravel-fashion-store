@@ -100,7 +100,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <form action="" method="post">
+                            <form action="{{ route('cart.add', ['product_id' => $product->id]) }}" method="post">
+                                @csrf
                                 <div class="flex-w flex-r-m p-b-10">
                                     <div class="size-203 flex-c-m respon6">
                                         Size
@@ -145,7 +146,7 @@
                                             </div>
 
                                             <input class="mtext-104 cl3 txt-center num-product" type="number"
-                                                name="num-product" value="1">
+                                                name="quantity" value="1">
 
                                             <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                                 <i class="fs-16 zmdi zmdi-plus"></i>
@@ -344,10 +345,13 @@
                                 <div class="block2-pic hov-img0">
                                     <img src="{{ asset('storage/' . $product->photo) }}" alt="IMG-PRODUCT">
 
-                                    <a href="#"
-                                        class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1">
-                                        <i class="fa fa-cart-shopping"></i> Thêm vào giỏ hàng
-                                    </a>
+                                    <form action="{{ route('cart.add', ['product_id' => $product->id]) }}" method="post">
+                                        @csrf
+                                        <button type="submit"
+                                            class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                            <i class="fa fa-cart-shopping me-2"></i> Thêm vào giỏ hàng
+                                        </button>
+                                    </form>
                                 </div>
 
                                 <div class="block2-txt flex-w flex-t p-t-14">
