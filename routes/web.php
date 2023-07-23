@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Route;
@@ -64,4 +65,7 @@ Route::prefix('wishlist')->middleware('login')->group(function () {
 Route::middleware('login')->group(function() {
     Route::get('/don-hang-cua-toi', [UserController::class, 'myOrder'])->name('user.orders');
     Route::get('/chi-tiet-don-hang/{code}.html', [UserController::class, 'orderDetail'])->name('user.orders.detail');
+    Route::put('/status/{code}/change/', [CheckoutController::class, 'updateStatus'])->name('user.orders.changeStatus');
 });
+
+Route::get('tim-kiem', [SearchController::class, 'search'])->name('search');

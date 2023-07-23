@@ -20,6 +20,7 @@ class Order extends Model
         'payment_method',
         'payment_status',
         'status',
+        'cancel_reason',
         'name',
         'email',
         'phone',

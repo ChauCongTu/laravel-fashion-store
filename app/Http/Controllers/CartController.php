@@ -109,7 +109,7 @@ class CartController extends Controller
         } else {
             $cart = [
                 'user_id' => Auth::id(),
-                'code' => 'CART-U' . Auth::id() . '-' . date('Hisdmy'),
+                'code' => null,
                 'coupon' => 0,
                 'total' => 0,
                 'products' => [

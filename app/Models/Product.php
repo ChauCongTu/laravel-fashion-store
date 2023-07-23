@@ -56,6 +56,13 @@ class Product extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public static function findByName($name, $limit = null)
+    {
+        if ($limit == null)
+            return Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))->where('name', 'LIKE', '%' . $name . '%')->get();
+        else
+            return Product::select('*', DB::raw('((discount/price)*100) as percent_discount, (price - discount) as display_price'))->where('name', 'LIKE', '%' . $name . '%')->limit($limit)->get();
+    }
     public function bestSeller($limit)
     {
         $products = OrderDetail::select('product_id', DB::raw('COUNT(*) as quantity'))

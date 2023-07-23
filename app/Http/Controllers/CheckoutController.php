@@ -13,9 +13,12 @@ class CheckoutController extends Controller
     public function getCheckout()
     {
         $cart = session()->get('cart');
+        $cart['code'] = 'U' . Auth::id() . 'T' . date('hidmy') . 'CRT';
         if ($cart == null || count($cart['products']) == 0) {
             return redirect()->back()->with('error', 'Bạn có mua gì đâu mà đòi thanh toán');
         }
+        session()->put('cart', $cart);
+        session()->save();
         return view('cart.checkout', compact('cart'));
     }
     public function postCheckout(OrderRequest $request)
@@ -23,7 +26,7 @@ class CheckoutController extends Controller
         // Lưu toàn bộ thông tin đơn đặt hàng vào session('order')
         $cart = session()->get('cart');
         $order = new Order();
-        $order->code = 'CART-UR' . Auth::id() . '-' . date('hidmy');
+        $order->code = $cart['code'];
         $order->user_id = Auth::id();
         $order->sub_total = $cart['total'];
         $order->total = $cart['final_price'];
@@ -74,5 +77,18 @@ class CheckoutController extends Controller
             // session()->forget('order');
             // session()->forget('details');
         }
+    }
+    public function updateStatus(string $code, Request $request)
+    {
+        try {
+            Order::findByCode($code)->update(['status' => $request->status, 'cancel_reason' => $request->reason]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại!<br /><br />Nếu tình trạng vẫn xảy ra, hãy báo cáo cho chúng tôi với mã lỗi: ' . $th->getCode());
+        }
+        return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
+    }
+    public function payment()
+    {
     }
 }
