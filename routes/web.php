@@ -64,9 +64,9 @@ Route::prefix('wishlist')->middleware('login')->group(function () {
 });
 
 Route::middleware('login')->group(function () {
-    Route::get('/trang-ca-nhan', [UserController::class, 'info'])->name('users.info');
-    Route::get('/ca-nhan/chinh-sua', [UserController::class, 'editInfo'])->name('users.info');
-    Route::post('/ca-nhan/chinh-sua', [UserController::class, 'postInfo'])->name('users.info');
+    Route::get('/tai-khoan-cua-toi.html', [UserController::class, 'myInfo'])->name('users.info');
+    Route::post('/tai-khoan-cua-toi.html', [UserController::class, 'editInfo'])->name('users.info');
+    Route::post('/doi-anh-dai-dien', [UserController::class, 'changeAvatar'])->name('users.change_avatar');
     Route::get('/don-hang-cua-toi', [UserController::class, 'myOrder'])->name('user.orders');
     Route::get('/chi-tiet-don-hang/{code}.html', [UserController::class, 'orderDetail'])->name('user.orders.detail');
     Route::put('/status/{code}/change/', [CheckoutController::class, 'updateStatus'])->name('user.orders.changeStatus');

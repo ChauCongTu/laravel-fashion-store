@@ -126,4 +126,17 @@ a,
   padding: 5px 0;
 }
 
+.upload div {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.upload input {
+  position: absolute;
+  font-size: 50px;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}
+
 /*# sourceMappingURL=app.css.map */

@@ -143,7 +143,7 @@
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item py-2" href="#"><i
+                                    <li><a class="dropdown-item py-2" href="{{ route('users.info') }}"><i
                                                 class="fa-solid fa-user me-3"></i>Thông tin cá nhân</a></li>
                                     <li><a class="dropdown-item py-2" href="{{ route('user.orders') }}"><i
                                                 class="fa-solid fa-clipboard me-3"></i>Quản lý đơn hàng</a></li>
@@ -226,7 +226,7 @@
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item py-2" href="#">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item py-2" href="{{ route('users.info') }}">Thông tin cá nhân</a></li>
                                     <li><a class="dropdown-item py-2" href="{{ route('user.orders') }}">Quản lý đơn
                                             hàng</a></li>
                                     <li><a class="dropdown-item py-2" href="#">Wishlist</a></li>

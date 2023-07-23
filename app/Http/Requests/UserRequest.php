@@ -30,6 +30,10 @@ class UserRequest extends FormRequest
         if ($this->route()->getName() == 'register') {
             $rules['password'] = 'required|min:6|max:16';
         }
+        if ($this->route()->getName() == 'users.info') {
+            $rules['email'] = 'required|email|min:5';
+            $rules['phone'] = 'required|numeric';
+        }
         return $rules;
     }
     public function messages(): array
