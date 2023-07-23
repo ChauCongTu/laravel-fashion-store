@@ -4,6 +4,7 @@ $background-color: #fff;
 $muted-color: #8f9bad;
 $color: #333;
 $danger: #dc3445;
+
 .logo {
     color: #dc3545;
     font-weight: 700;
@@ -70,6 +71,7 @@ a,
         right: -25px;
     }
 }
+
 .pagination {
     .page-item {
         display: block;
@@ -101,7 +103,8 @@ a,
         display: none;
     }
 }
-.reply-content{
+
+.reply-content {
     overflow: hidden;
     word-wrap: break-word;
     display: -webkit-box;
@@ -110,10 +113,42 @@ a,
     width: 100%;
     margin: 10px 0;
 }
+
 .message-custom {
     position: fixed;
     top: 20%;
     left: 50%;
     transform: translate(-50%);
     z-index: 1000;
+}
+
+.n-content {
+    overflow: hidden;
+    word-wrap: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.content-post {
+    img {
+        padding-top: 10px;
+        width: 100%;
+    }
+
+    .caption {
+        padding: 0 10px;
+        padding-top: 5px;
+        background-color: #eee;
+        font-style: italic;
+        color: #333;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    p {
+        padding: 5px 0;
+    }
 }

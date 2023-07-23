@@ -99,4 +99,31 @@ a,
   z-index: 1000;
 }
 
+.n-content {
+  overflow: hidden;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.content-post img {
+  padding-top: 10px;
+  width: 100%;
+}
+.content-post .caption {
+  padding: 0 10px;
+  padding-top: 5px;
+  background-color: #eee;
+  font-style: italic;
+  color: #333;
+  text-align: center;
+  font-size: 14px;
+}
+.content-post p {
+  padding: 5px 0;
+}
+
 /*# sourceMappingURL=app.css.map */

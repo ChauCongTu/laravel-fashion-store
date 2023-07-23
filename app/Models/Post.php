@@ -11,7 +11,9 @@ class Post extends Model
     use HasFactory;
     public $fillable = [
         'user_id',
+        'photo',
         'title',
+        'slug',
         'content',
         'tag'
     ];

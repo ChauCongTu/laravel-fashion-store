@@ -6,6 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
@@ -28,7 +29,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/{slug}-{id}.cat', [CategoriesController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('category.show');
 
-Route::get('/{slug}-{id}', [ProductController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('product.show');
+Route::get('^/{slug}-{id}', [ProductController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('product.show');
 
 Route::post('/comment/{reply_id?}', [ProductController::class, 'comment'])->name('product.comment');
 
@@ -62,10 +63,17 @@ Route::prefix('wishlist')->middleware('login')->group(function () {
     Route::delete('/remove-from-wishlist/{product_id}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 });
 
-Route::middleware('login')->group(function() {
+Route::middleware('login')->group(function () {
+    Route::get('/trang-ca-nhan', [UserController::class, 'info'])->name('users.info');
+    Route::get('/ca-nhan/chinh-sua', [UserController::class, 'editInfo'])->name('users.info');
+    Route::post('/ca-nhan/chinh-sua', [UserController::class, 'postInfo'])->name('users.info');
     Route::get('/don-hang-cua-toi', [UserController::class, 'myOrder'])->name('user.orders');
     Route::get('/chi-tiet-don-hang/{code}.html', [UserController::class, 'orderDetail'])->name('user.orders.detail');
     Route::put('/status/{code}/change/', [CheckoutController::class, 'updateStatus'])->name('user.orders.changeStatus');
 });
 
 Route::get('tim-kiem', [SearchController::class, 'search'])->name('search');
+Route::prefix('blog')->group(function () {
+    Route::get('/', [PostController::class, 'list'])->name('post.list');
+    Route::get('/{slug}-{id}', [PostController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('post.show');
+});
