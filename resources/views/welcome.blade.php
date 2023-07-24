@@ -77,9 +77,9 @@
         </div>
     </div>
 
-    <section class="flashsale bg-danger pb-5">
+    <section class="flashsale pb-5" style="background-color: red">
         <div class="container">
-            <div class="h3 text-light text-center py-5">GIÁ TỐT NHẤT NGÀY {{ date('d/m/Y') }}</div>
+            <div class="h3 text-light text-center py-5 fw-bold">GIÁ TỐT NHẤT NGÀY {{ date('d/m/Y') }}</div>
             <div class="slick-product">
                 {{-- Each Product --}}
                 @foreach ($topSale as $product)

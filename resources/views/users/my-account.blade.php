@@ -42,7 +42,7 @@
                                             <form action="{{ route('users.change_avatar') }}" enctype="multipart/form-data" method="post">
                                                 <div class="container-fluid">
                                                     @csrf
-                                                    <input type="file" class="form-control" name="photo">
+                                                    <input type="file" class="form-control" name="photo" accept="jpeg,jpg,png">
                                                     <div class="mt-3">
                                                         <p>Kích thước tối đa 1MB</p>
                                                         <p>Định dạng ảnh: JPEG, PNG</p>

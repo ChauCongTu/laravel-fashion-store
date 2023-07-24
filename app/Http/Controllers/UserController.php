@@ -34,7 +34,14 @@ class UserController extends Controller
         if ($request->hasFile('photo')) {
             $image = $request->file('photo');
 
+            if ($image->getSize() > 1024*1024) {
+                return back()->with('error', 'Kích thước tối đa của hình ảnh là 1 MB');
+            }
+            $validExtensions = ['jpeg', 'jpg', 'png'];
             $extension = $image->getClientOriginalExtension();
+            if (!in_array($extension, $validExtensions)) {
+                return back()->with('error', 'Định dạng ảnh không được hỗ trợ');
+            }
             $fileName = $id . '.' . $extension;
             Storage::putFileAs('public/users', $image, $fileName);
             User::where('id', $id)->update(['photo' => 'users/' . $fileName]);
