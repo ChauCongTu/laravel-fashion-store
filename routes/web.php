@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesManagementController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
@@ -77,3 +79,10 @@ Route::prefix('blog')->group(function () {
     Route::get('/', [PostController::class, 'list'])->name('post.list');
     Route::get('/{slug}-{id}', [PostController::class, 'show'])->where(['slug' => '.+', 'id' => '[0-9]+'])->name('post.show');
 });
+
+// Admin Route
+Route::prefix('/admin')->middleware('adminCheck')->group(function() {
+    Route::get('/', [DashboardController::class, 'dashboard'])->name('admin');
+    // Route::resource('/category', CategoriesManagementController::class);
+});
+// Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);
