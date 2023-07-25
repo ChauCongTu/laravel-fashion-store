@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
@@ -84,5 +85,7 @@ Route::prefix('blog')->group(function () {
 Route::prefix('/admin')->middleware('adminCheck')->group(function() {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('admin');
     Route::resource('/quan-ly-danh-muc', CategoriesManagementController::class);
+    Route::put('updateDiscount/{id}', [ProductManagementController::class, 'updateDiscount'])->name('product.changeDiscount');
+    Route::resource('/quan-ly-san-pham', ProductManagementController::class);
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);

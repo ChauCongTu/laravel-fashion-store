@@ -36,7 +36,7 @@
 
     <!-- Main CSS-->
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="all">
-
+    <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>
 
 <body class="animsition">
@@ -85,7 +85,27 @@
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tag"></i>Sản phẩm
+                                <i class="zmdi zmdi-card-travel"></i>Sản phẩm
+                                <span class="arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{ route('quan-ly-san-pham.create') }}">
+                                        Thêm sản phẩm
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('quan-ly-san-pham.index') }}">
+                                        Quản lý sản phẩm
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="zmdi zmdi-assignment-o"></i>Đơn hàng
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
@@ -93,7 +113,7 @@
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tag"></i>Đơn hàng
+                                <i class="zmdi zmdi-label"></i>Coupon
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
@@ -101,7 +121,7 @@
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-tag"></i>Coupon
+                                <i class="zmdi zmdi-card"></i>Banner
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
@@ -109,7 +129,15 @@
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas fa-file-alt"></i>Bài viết
+                                <i class="zmdi zmdi-view-compact"></i>Thương hiệu
+                                <span class="arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="zmdi zmdi-file"></i>Bài viết
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
