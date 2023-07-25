@@ -70,6 +70,18 @@
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{ route('quan-ly-danh-muc.create') }}">
+                                        Thêm danh mục
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('quan-ly-danh-muc.index') }}">
+                                        Quản lý danh mục
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
@@ -353,6 +365,20 @@
                 </div>
             </section>
             <!-- END BREADCRUMB-->
+            @if (\Session::has('error'))
+                <div class="mt-3 mx-5">
+                    <div class="alert alert-danger">
+                        <span class="content">{{ Session::get('error') }}</span>
+                    </div>
+                </div>
+            @endif
+            @if (\Session::has('success'))
+                <div class="mt-3 mx-5">
+                    <div class="alert alert-success">
+                        <span class="content">{{ Session::get('success') }}</span>
+                    </div>
+                </div>
+            @endif
 
             @yield('content')
 

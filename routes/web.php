@@ -83,6 +83,6 @@ Route::prefix('blog')->group(function () {
 // Admin Route
 Route::prefix('/admin')->middleware('adminCheck')->group(function() {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('admin');
-    // Route::resource('/category', CategoriesManagementController::class);
+    Route::resource('/quan-ly-danh-muc', CategoriesManagementController::class);
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);
