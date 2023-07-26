@@ -104,12 +104,9 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="#">
+                        <li class="active">
+                            <a class="" href="{{ route('admin.order') }}">
                                 <i class="zmdi zmdi-assignment-o"></i>Đơn hàng
-                                <span class="arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </span>
                             </a>
                         </li>
                         <li class="active has-sub">

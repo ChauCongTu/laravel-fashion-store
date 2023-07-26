@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoriesManagementController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\Admin\ProductManagementController;
+use App\Http\Controllers\Export\PDFController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CartController;
@@ -15,6 +17,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WishlistController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -82,7 +85,7 @@ Route::prefix('blog')->group(function () {
 });
 
 // Admin Route
-Route::prefix('/admin')->middleware('adminCheck')->group(function() {
+Route::prefix('/admin')->middleware('adminCheck')->group(function () {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('admin');
     Route::resource('/quan-ly-danh-muc', CategoriesManagementController::class);
     Route::put('updateDiscount/{id}', [ProductManagementController::class, 'updateDiscount'])->name('product.changeDiscount');
@@ -91,5 +94,10 @@ Route::prefix('/admin')->middleware('adminCheck')->group(function() {
     Route::post('/hinh-anh/{product_id}/them', [ProductManagementController::class, 'addImage'])->name('product.image.add');
     Route::delete('/hinh-anh/{id}/xoa', [ProductManagementController::class, 'deleteImage'])->name('product.image.delete');
     Route::resource('/quan-ly-san-pham', ProductManagementController::class);
+    Route::prefix('/quan-ly-don-hang')->group(function () {
+        Route::get('/', [OrderManagementController::class, 'index'])->name('admin.order');
+        Route::put('updateStatus/{id}', [OrderManagementController::class, 'updateStatus'])->name('admin.order.changStatus');
+    });
+    Route::get('create-pdf-file/{id}', [PDFController::class, 'index'])->name('admin.order.export');
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);

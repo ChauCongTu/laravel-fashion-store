@@ -80,13 +80,13 @@ class CheckoutController extends Controller
     }
     public function updateStatus(string $code, Request $request)
     {
-        try {
-            Order::findByCode($code)->update(['status' => $request->status, 'cancel_reason' => $request->reason]);
-        } catch (\Throwable $th) {
-            //throw $th;
-            return redirect()->back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại!<br /><br />Nếu tình trạng vẫn xảy ra, hãy báo cáo cho chúng tôi với mã lỗi: ' . $th->getCode());
+        $order = Order::findByCode($code);
+        if ($order->status == 'Đang xử lý') {
+            $order->status = 'Đã hủy';
+            $order->save();
+            return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
         }
-        return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
+        return back()->with('error', 'Không thể hủy đơn hàng khi đã bắt đầu vận chuyển. Nếu cần hỗ trợ, hãy liên hệ chúng tôi qua email: <b>cskh@nzfashion.com</b> hoặc hotline: <b>19001990</b>');
     }
     public function payment()
     {
