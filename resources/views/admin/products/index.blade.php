@@ -58,7 +58,12 @@
                                     <td>
                                         <span>{{ $product->name }}</span>
                                     </td>
-                                    <td class="desc">{{ $product->stock }}</td>
+                                    <td>{{ $product->stock }}
+                                        <button
+                                            class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#stock_{{ $product->id }}" data-toggle="tooltip" data-placement="top" title="Chỉnh sửa số lượnt">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </button>
+                                    </td>
                                     <td>
                                         <x-price :discount='$product->display_price' :price='$product->price' />
                                     </td>
@@ -69,12 +74,12 @@
                                         <div class="table-data-feature">
                                             <button class="item" data-toggle="tooltip" data-placement="top"
                                                 data-bs-toggle="modal" data-bs-target="#discount_{{ $product->id }}"
-                                                title="Xóa">
+                                                title="Cập nhật khuyến mãi">
                                                 <i class="zmdi zmdi-plus"></i>
                                             </button>
-                                            <a href="{{ route('quan-ly-san-pham.edit', ['quan_ly_san_pham' => $product]) }}"
+                                            <a href="{{ route('product.image', ['product_id' => $product->id]) }}"
                                                 class="item" data-toggle="tooltip" data-placement="top"
-                                                title="Chỉnh sửa hình ảnh">
+                                                title="Quản lý hình ảnh">
                                                 <i class="zmdi zmdi-collection-image"></i>
                                             </a>
                                             <a href="{{ route('quan-ly-san-pham.edit', ['quan_ly_san_pham' => $product]) }}"
@@ -89,13 +94,38 @@
                                         </div>
                                     </td>
                                 </tr>
+                                <div class="modal fade" id="stock_{{ $product->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="deleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form action="{{ route('product.changeStock', ['id' => $product->id]) }}"
+                                                method="post">
+                                                @csrf
+                                                @method('PUT')
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Cập nhật số lượng trong kho</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <label for="discount" class="control-label mb-1">Nhập số lượng</label>
+                                                    <input type="text" name="stock" class="form-control"
+                                                        value="{{ $product->stock }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Hủy</button>
+                                                    <button type="submit" class="btn btn-danger" id="delete">Xác
+                                                        nhận</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- Modal -->
                                 <div class="modal fade" id="discount_{{ $product->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="deleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
-                                            <form
-                                                action="{{ route('product.changeDiscount', ['id' => $product->id]) }}"
+                                            <form action="{{ route('product.changeDiscount', ['id' => $product->id]) }}"
                                                 method="post">
                                                 @csrf
                                                 @method('PUT')
@@ -103,8 +133,10 @@
                                                     <h4 class="modal-title">Cập nhật khuyến mãi</h4>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <label for="discount" class="control-label mb-1">Nhập số tiền được giảm</label>
-                                                    <input type="text" name="discount" class="form-control" value="{{ $product->discount }}">
+                                                    <label for="discount" class="control-label mb-1">Nhập số tiền được
+                                                        giảm</label>
+                                                    <input type="text" name="discount" class="form-control"
+                                                        value="{{ $product->discount }}">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"

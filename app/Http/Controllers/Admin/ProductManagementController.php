@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Photo;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -65,6 +66,19 @@ class ProductManagementController extends Controller
         }
         return back()->with('success', 'Cập nhật khuyến mãi thành công');
     }
+    public function updateStock(Request $request, int $id)
+    {
+        if ($request->stock == null || $request->stock < 0) {
+            return back()->with('error', 'Cập nhật số lượng thất bại, số lượng sản phẩm không được nhỏ hơn 1');
+        }
+        $stock = $request->stock;
+        try {
+            Product::where('id', $id)->update(['stock' => $stock]);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại');
+        }
+        return back()->with('success', 'Cập nhật số lượng thành công');
+    }
     /**
      * Display the specified resource.
      */
@@ -101,6 +115,45 @@ class ProductManagementController extends Controller
         return redirect(route('quan-ly-san-pham.index'))->with('success', 'Thêm sản phẩm thành công');
     }
 
+    public function image(int $product_id)
+    {
+        $images = Photo::where('product_id', $product_id)->get();
+        return view('admin.products.image', compact('images', 'product_id'));
+    }
+
+    public function addImage(Request $request, int $product_id)
+    {
+        if ($request->photo == null)
+            return back()->with('error', 'Tải lên thất bại, vui lòng chọn hình ảnh');
+        $numb = 0;
+        foreach ($request->photo as $photo) {
+            if ($photo->getSize() > 1024 * 1024) {
+                continue;
+            }
+            $validExtensions = ['jpeg', 'jpg', 'png'];
+            $extension = $photo->getClientOriginalExtension();
+            if (!in_array($extension, $validExtensions)) {
+                continue;
+            }
+            $path = "/product/extension/" . $photo->hashName();
+            Storage::putFileAs('public', $photo, $path);
+            $image = new Photo();
+            $image->product_id = $product_id;
+            $image->photo = $path;
+            $image->save();
+            $numb++;
+        }
+        return back()->with('success', 'Tải lên thành công ' . $numb . ' ảnh');
+    }
+    public function deleteImage(int $id)
+    {
+        try {
+            Photo::destroy($id);
+        } catch (\Throwable $th) {
+            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại #' . $th->getCode());
+        }
+        return back()->with('success', 'Xóa hình ảnh thành công');
+    }
     /**
      * Remove the specified resource from storage.
      */
@@ -109,7 +162,7 @@ class ProductManagementController extends Controller
         try {
             Product::destroy($id);
         } catch (\Throwable $th) {
-            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại');
+            return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại #' . $th->getCode());
         }
         return back()->with('success', 'Xóa sản phẩm thành công');
     }

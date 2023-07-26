@@ -42,7 +42,8 @@ class DashboardController extends Controller
         if ($daysDiff < 10) {
             $revenue = Order::select(DB::raw('DATE(created_at) as time'), DB::raw('SUM(orders.total) as revenue'))
                 ->where('payment_status', 'Đã thanh toán')
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate)
+                ->where('created_at', '<=', $endDate)
                 ->groupBy(DB::raw('DATE(created_at)'))
                 ->get();
             foreach ($revenue as $item) {
@@ -52,7 +53,8 @@ class DashboardController extends Controller
         } else if ($daysDiff >= 10 && $daysDiff <= 56) {
             $revenue = Order::select(DB::raw('WEEK(created_at) as time'), DB::raw('SUM(orders.total) as revenue'))
                 ->where('payment_status', 'Đã thanh toán')
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate)
+                ->where('created_at', '<=', $endDate)
                 ->groupBy(DB::raw('WEEK(created_at)'))
                 ->get();
             foreach ($revenue as $item) {
@@ -62,7 +64,8 @@ class DashboardController extends Controller
         } else {
             $revenue = Order::select(DB::raw('MONTH(created_at) as time'), DB::raw('SUM(orders.total) as revenue'))
                 ->where('payment_status', 'Đã thanh toán')
-                ->whereBetween('created_at', [$startDate, $endDate])
+                ->where('created_at', '>=', $startDate)
+                ->where('created_at', '<=', $endDate)
                 ->groupBy(DB::raw('MONTH(created_at)'))
                 ->get();
             foreach ($revenue as $item) {

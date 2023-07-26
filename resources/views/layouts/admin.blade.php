@@ -35,6 +35,7 @@
     <link href="{{ asset('vendor/vector-map/jqvmap.min.css') }}" rel="stylesheet" media="all">
 
     <!-- Main CSS-->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="{{ asset('css/theme.css') }}" rel="stylesheet" media="all">
     <script src="https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js"></script>
 </head>

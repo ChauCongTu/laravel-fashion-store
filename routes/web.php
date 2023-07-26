@@ -86,6 +86,10 @@ Route::prefix('/admin')->middleware('adminCheck')->group(function() {
     Route::get('/', [DashboardController::class, 'dashboard'])->name('admin');
     Route::resource('/quan-ly-danh-muc', CategoriesManagementController::class);
     Route::put('updateDiscount/{id}', [ProductManagementController::class, 'updateDiscount'])->name('product.changeDiscount');
+    Route::put('updateStock/{id}', [ProductManagementController::class, 'updateStock'])->name('product.changeStock');
+    Route::get('/hinh-anh/{product_id}', [ProductManagementController::class, 'image'])->name('product.image');
+    Route::post('/hinh-anh/{product_id}/them', [ProductManagementController::class, 'addImage'])->name('product.image.add');
+    Route::delete('/hinh-anh/{id}/xoa', [ProductManagementController::class, 'deleteImage'])->name('product.image.delete');
     Route::resource('/quan-ly-san-pham', ProductManagementController::class);
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);
