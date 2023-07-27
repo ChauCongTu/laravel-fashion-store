@@ -185,8 +185,7 @@
 
                                     <input type="radio" class="btn-check" name="payment_method" id="atm"
                                         value="atm" autocomplete="off">
-                                    <label class="btn btn-outline-success rounded-0 py-3 px-4" for="atm">Thẻ tín dụng
-                                        / ATM</label>
+                                    <label class="btn btn-outline-success rounded-0 py-3 px-4" for="atm">Thanh toán VNPAY</label>
 
                                     <input type="radio" class="btn-check" name="payment_method" id="momo"
                                         value="momo" autocomplete="off">

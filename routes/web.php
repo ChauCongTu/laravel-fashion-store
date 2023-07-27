@@ -59,6 +59,8 @@ Route::post('/cap-nhat-gio-hang', [CartController::class, 'updateCart'])->name('
 Route::post('/ap-dung-coupon', [CartController::class, 'applyCoupon'])->middleware('login')->name('cart.coupon');
 Route::get('/thanh-toan', [CheckoutController::class, 'getCheckout'])->middleware('login')->name('cart.checkout');
 Route::post('/thanh-toan', [CheckoutController::class, 'postCheckout'])->middleware('login')->name('cart.checkout');
+Route::get('vnpay_payment', [CheckoutController::class, 'vnpay_payment'])->middleware('login')->name('vnpay');
+Route::get('thanh-toan-thanh-cong', [CheckoutController::class, 'finishPayment'])->middleware('login')->name('vnpay.success');
 Route::post('/cancel/{code}', [CheckoutController::class, 'cancelOrder'])->middleware('login')->name('cart.cancel');
 Route::get('/destroy-cart', function () {
     session()->forget('cart');
