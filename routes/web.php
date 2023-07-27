@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerManagementController;
 use App\Http\Controllers\Admin\BrandManagementController;
 use App\Http\Controllers\Admin\CategoriesManagementController;
 use App\Http\Controllers\Admin\CouponManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderManagementController;
+use App\Http\Controllers\Admin\PostManagementController;
 use App\Http\Controllers\Admin\ProductManagementController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Export\PDFController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -105,5 +108,10 @@ Route::prefix('/admin')->middleware('adminCheck')->group(function () {
     Route::get('create-pdf-file/{id}', [PDFController::class, 'index'])->name('admin.order.export');
     Route::resource('/ma-giam-gia', CouponManagementController::class);
     Route::resource('/quan-ly-thuong-hieu', BrandManagementController::class);
+    Route::resource('/quan-ly-banner', BannerManagementController::class);
+    Route::resource('quan-ly-bai-viet', PostManagementController::class);
+    Route::resource('quan-ly-nguoi-dung', UserManagementController::class);
+    Route::put('changeRole/{id}', [UserManagementController::class, 'changeRole'])->name('quan-ly-nguoi-dung.changeRole');
+    Route::put('banUser/{id}', [UserManagementController::class, 'banUser'])->name('quan-ly-nguoi-dung.banUser');
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);

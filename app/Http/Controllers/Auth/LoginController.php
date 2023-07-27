@@ -30,8 +30,12 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
         if ($user != null) {
             if (Hash::check($request->password, $user->password)) {
-                Auth::login($user);
-                return redirect(route('home'));
+                if (time() > $user->ban_time) {
+                    Auth::login($user);
+                    return redirect(route('home'));
+                } else {
+                    return back()->with('authErr', 'Tài khoản của bạn đang bị khóa cho đến <b>' . date('H:i d/m/Y', $user->ban_time) .'</b>. <br>Chi tiết liên hệ hotro@nzfashion.com hoặc hotline: 19001990');
+                }
             } else {
                 return back()->with('authErr', 'Mật khẩu không chính xác!');
             }

@@ -12,7 +12,7 @@ class User extends Authenticatable
 {
     use HasFactory;
     public $fillable = [
-        'name', 'photo', 'email', 'phone', 'password', 'address'
+        'name', 'photo', 'email', 'phone', 'password', 'address', 'role', 'ban_time'
     ];
     public function comments(): HasMany
     {

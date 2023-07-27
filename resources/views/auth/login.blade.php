@@ -46,7 +46,7 @@
                                                 type="submit">Đăng nhập</button>
                                             @if (\Session::has('authErr'))
                                                 <div class="alert alert-danger mt-2 rounded">
-                                                    <li> {!! \Session::get('authErr') !!}</li>
+                                                    {!! \Session::get('authErr') !!}
                                                 </div>
                                             @endif
                                             <a class="text-muted" href="#!">Quên mật khẩu?</a>

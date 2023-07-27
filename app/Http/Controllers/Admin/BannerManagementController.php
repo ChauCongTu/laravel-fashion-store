@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\BrandRequest;
-use App\Models\Brand;
+use App\Http\Requests\BannerRequest;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class BrandManagementController extends Controller
+class BannerManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,11 +17,11 @@ class BrandManagementController extends Controller
     public function index(Request $request)
     {
         if ($request->s == null)
-            $brands = Brand::paginate(10);
+            $banners = Banner::paginate(10);
         else
-            $brands = Brand::where('name', 'LIKE', '%' . $request->s . '%')->paginate(10);
+            $banners = Banner::where('title', 'LIKE', '%' . $request->s . '%')->paginate(10);
         $searchString = $request->s != null ? $request->s : null;
-        return view('admin.brand.index', compact('searchString', 'brands'));
+        return view('admin.banners.index', compact('searchString', 'banners'));
     }
 
     /**
@@ -29,24 +29,23 @@ class BrandManagementController extends Controller
      */
     public function create()
     {
-        return view('admin.brand.add');
+        return view('admin.banners.add');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(BrandRequest $request)
+    public function store(BannerRequest $request)
     {
         if ($request->hasFile('photo')) {
             if ($request->photo->getSize() > 1024 * 1024)
                 return back()->with('error', 'Hình ảnh tải lên không được lớn hơn 1MB');
-            $brand = $request->except('_token');
-            $brand['slug'] = Str::slug($brand['name']) . date('Hisdmy');
-            $fileName = $brand['slug'] . '.' . $request->photo->extension();
-            $brand['photo'] = 'brand/' . $fileName;
-            Storage::putFileAs('public', $request->photo, $brand['photo']);
-            Brand::create($brand);
-            return back()->with('success', 'Thêm thương hiệu thành công');
+            $banner = $request->except('_token');
+            $fileName = Str::random(14) . '.' . $request->photo->extension();
+            $banner['photo'] = 'banner/' . $fileName;
+            Storage::putFileAs('public', $request->photo, $banner['photo']);
+            Banner::create($banner);
+            return redirect(route('quan-ly-banner.index'))->with('success', 'Thêm banner thành công');
         }
         return back()->with('error', 'Vui lòng chọn ảnh để tải lên');
     }
@@ -64,27 +63,25 @@ class BrandManagementController extends Controller
      */
     public function edit(int $id)
     {
-        $brand = Brand::find($id);
-        return view('admin.brand.edit', compact('brand'));
+        $banner = Banner::find($id);
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(BrandRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
-        $brand = $request->except('_token');
-        $brand['slug'] = Str::slug($brand['name']) . date('Hisdmy');
+        $banner = $request->except('_token');
         if ($request->hasFile('photo')) {
             if ($request->photo->getSize() > 1024 * 1024)
                 return back()->with('error', 'Hình ảnh tải lên không được lớn hơn 1MB');
-
-            $fileName = $brand['slug'] . '.' . $request->photo->extension();
-            $brand['photo'] = 'brand/' . $fileName;
-            Storage::putFileAs('public', $request->photo, $brand['photo']);
+            $fileName = Str::random(14) . '.' . $request->photo->extension();
+            $banner['photo'] = 'banner/' . $fileName;
+            Storage::putFileAs('public', $request->photo, $banner['photo']);
         }
-        Brand::where('id', $id)->update($brand);
-        return back()->with('success', 'Chỉnh sửa thương hiệu thành công');
+        Banner::where('id', $id)->update($banner);
+        return redirect(route('quan-ly-banner.index'))->with('success', 'Thêm banner thành công');
     }
 
     /**
@@ -93,10 +90,10 @@ class BrandManagementController extends Controller
     public function destroy(int $id)
     {
         try {
-            Brand::destroy($id);
+            Banner::destroy($id);
         } catch (\Throwable $th) {
             return back()->with('error', 'Có lỗi xảy ra, vui lòng thử lại');
         }
-        return back()->with('success', 'Xóa thương hiệu thành công');
+        return back()->with('success', 'Xóa banner thành công');
     }
 }
