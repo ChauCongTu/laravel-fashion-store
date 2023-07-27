@@ -116,6 +116,18 @@
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{ route('ma-giam-gia.create') }}">
+                                        Thêm mã giảm giá
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('ma-giam-gia.index') }}">
+                                        Quản lý mã giảm giá
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">
@@ -132,6 +144,18 @@
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a href="{{ route('quan-ly-thuong-hieu.create') }}">
+                                        Thêm thương hiệu mới
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('quan-ly-thuong-hieu.index') }}">
+                                        Quản lý thương hiệu
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="active has-sub">
                             <a class="js-arrow" href="#">

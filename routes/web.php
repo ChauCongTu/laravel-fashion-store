@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\BrandManagementController;
 use App\Http\Controllers\Admin\CategoriesManagementController;
+use App\Http\Controllers\Admin\CouponManagementController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderManagementController;
 use App\Http\Controllers\Admin\ProductManagementController;
@@ -99,5 +101,7 @@ Route::prefix('/admin')->middleware('adminCheck')->group(function () {
         Route::put('updateStatus/{id}', [OrderManagementController::class, 'updateStatus'])->name('admin.order.changStatus');
     });
     Route::get('create-pdf-file/{id}', [PDFController::class, 'index'])->name('admin.order.export');
+    Route::resource('/ma-giam-gia', CouponManagementController::class);
+    Route::resource('/quan-ly-thuong-hieu', BrandManagementController::class);
 });
 // Route::post('/getRevenue', [DashboardController::class, 'getRevenue']);
