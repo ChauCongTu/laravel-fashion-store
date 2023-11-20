@@ -7,16 +7,17 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="nav d-flex mb-3 justify-content-center">
-                    <a href="{{ route('user.orders') }}" class="pe-5 pb-3 cl1 hov-cl13">Tất cả</a>
-                    <a href="{{ route('user.orders') }}?status=dang-xu-ly" class="pe-5 pb-3 cl1 hov-cl13">Đang xử lý</a>
-                    <a href="{{ route('user.orders') }}?status=dang-giao-hang" class="pe-5 pb-3 cl1 hov-cl13">Đang giao
-                        hàng</a>
-                    <a href="{{ route('user.orders') }}?status=da-nhan-hang" class="pe-5 pb-3 cl1 hov-cl13">Đã nhận hàng</a>
-                    <a href="{{ route('user.orders') }}?status=da-huy" class="pe-5 pb-3 cl1 hov-cl13">Đã hủy</a>
+                    <a href="{{ route('user.orders') }}" class="pe-5 pb-3 cl1 hov-cl13">Tất Cả</a>
+                    <a href="{{ route('user.orders') }}?status=dang-xu-ly" class="pe-5 pb-3 cl1 hov-cl13">Đang Xử Lý</a>
+                    <a href="{{ route('user.orders') }}?status=dang-giao-hang" class="pe-5 pb-3 cl1 hov-cl13">Đang Giao
+                        Hàng</a>
+                    <a href="{{ route('user.orders') }}?status=da-nhan-hang" class="pe-5 pb-3 cl1 hov-cl13">Đã Nhận Hàng</a>
+                    <a href="{{ route('user.orders') }}?status=hoan-thanh" class="pe-5 pb-3 cl1 hov-cl13">Hoàn Thành</a>
+                    <a href="{{ route('user.orders') }}?status=da-huy" class="pe-5 pb-3 cl1 hov-cl13">Đã Hủy</a>
                 </div>
                 <div class="list">
                     @forelse  ($orders as $order)
-                        <div class="item mt-3 bg-light px-5">
+                        <div class="item mt-3 border px-5">
                             <div class="status d-flex justify-content-end text-uppercase fw-bold p-3 text-primary">
                                 {{ $order->status }}</div>
                             <div class="border-bottom border-top py-2">

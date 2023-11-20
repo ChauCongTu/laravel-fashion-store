@@ -90,16 +90,13 @@
                                 data-label="-{{ ceil($product->percent_discount) }}%">
                                 <img src="{{ asset('storage/' . $product->photo) }}"
                                     alt="ảnh của sản phẩm {{ $product->name }}">
-                                <form action="{{ route('cart.add', ['product_id' => $product->id]) }}" method="post">
-                                    @csrf
-                                    <button type="submit"
+                                    <a href="{{ route('product.show', ['slug' => $product->slug, 'id' => $product->id]) }}"
                                         class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                                        <i class="fa fa-cart-shopping me-2"></i> Thêm vào giỏ hàng
-                                    </button>
-                                </form>
+                                        <i class="fa-solid fa-magnifying-glass me-3"></i> Xem chi tiết
+                                    </a>
                             </div>
 
-                            <div class="block2-txt flex-w flex-t p-t-14">
+                            <div class="block2-txt flex-w flex-t p-t-14 content-sp">
                                 <div class="block2-txt-child1 flex-col-l ">
                                     <a href="{{ route('product.show', ['slug' => $product->slug, 'id' => $product->id]) }}"
                                         class="fw-bold cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
@@ -139,11 +136,10 @@
     <!-- Product -->
     <section class="bg0 p-t-23 p-b-140">
         <div class="container">
-            <div class="h1 mt-3 text-dark">Sản phẩm mới nhất</div>
             <div class="flex-w flex-sb-m p-b-52">
                 <div class="flex-w flex-l-m filter-tope-group m-tb-10">
                     <button class="cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-                        Tất cả sản phẩm
+                        Thời trang mới 2023
                     </button>
                     {{-- Forearch category --}}
                     @foreach ($categories as $category)
@@ -165,14 +161,10 @@
                             <div class="block2-pic hov-img0  {{ $product->status != 'default' ? 'label-hot' : false }}"
                                 data-label="{{ strtoupper($product->status) }}">
                                 <img src="{{ asset('storage/' . $product->photo) }}" alt="IMG-PRODUCT">
-
-                                <form action="{{ route('cart.add', ['product_id' => $product->id]) }}" method="post">
-                                    @csrf
-                                    <button type="submit"
-                                        class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                                        <i class="fa fa-cart-shopping me-2"></i> Thêm vào giỏ hàng
-                                    </button>
-                                </form>
+                                <a href="{{ route('product.show', ['slug' => $product->slug, 'id' => $product->id]) }}"
+                                    class="block2-btn flex-c-m cl2 w-75 py-2 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                                    <i class="fa-solid fa-magnifying-glass me-3"></i> Xem chi tiết
+                                </a>
                             </div>
 
                             <div class="block2-txt flex-w flex-t p-t-14">

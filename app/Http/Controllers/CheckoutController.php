@@ -82,13 +82,24 @@ class CheckoutController extends Controller
     public function updateStatus(string $code, Request $request)
     {
         $order = Order::findByCode($code);
-        if ($order->status == 'Đang xử lý') {
-            $order->status = 'Đã hủy';
-            $order->save();
-            return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
+        $reqStatus = $request->status;
+        if ($reqStatus == 'Đã Hủy') {
+            if ($order->status == 'Đang Xử Lý') {
+                $order->status = $reqStatus;
+                $order->save();
+                return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
+            }
+            return back()->with('error', 'Không thể hủy đơn hàng khi đã bắt đầu vận chuyển. Nếu cần hỗ trợ, hãy liên hệ chúng tôi qua email: <b>cskh@nzfashion.com</b> hoặc hotline: <b>19001990</b>');
         }
-        return back()->with('error', 'Không thể hủy đơn hàng khi đã bắt đầu vận chuyển. Nếu cần hỗ trợ, hãy liên hệ chúng tôi qua email: <b>cskh@nzfashion.com</b> hoặc hotline: <b>19001990</b>');
-    }
+        if ($reqStatus == 'Hoàn Thành') {
+            if ($order->status == 'Đã Giao Hàng') {
+                $order->status = $reqStatus;
+                $order->save();
+                return redirect()->back()->with('msg', $request->status . ' đơn hàng thành công');
+            }
+            return back()->with('error', 'Không thể hoàn thành đơn hàng chưa được giao. Nếu cần hỗ trợ, hãy liên hệ chúng tôi qua email: <b>cskh@nzfashion.com</b> hoặc hotline: <b>19001990</b>');
+        }
+   }
     public function vnpay_payment()
     {
         if (session()->has('order')) {

@@ -54,13 +54,15 @@ class UserController extends Controller
     public function myOrder(Request $request)
     {
         if ($request->status == 'dang-giao-hang') {
-            $orders = Order::where('user_id', Auth::id())->where('status', 'Đang giao hàng')->orderBy('id', 'DESC')->paginate(8);
+            $orders = Order::where('user_id', Auth::id())->where('status', 'Đang Giao Hàng')->orderBy('id', 'DESC')->paginate(8);
         } elseif ($request->status == 'da-nhan-hang') {
-            $orders = Order::where('user_id', Auth::id())->where('status', 'Hoàn thành')->orderBy('id', 'DESC')->paginate(8);
+            $orders = Order::where('user_id', Auth::id())->where('status', 'Đã Giao Hàng')->orderBy('id', 'DESC')->paginate(8);
         } elseif ($request->status == 'da-huy') {
-            $orders = Order::where('user_id', Auth::id())->where('status', 'Đã hủy')->orderBy('id', 'DESC')->paginate(8);
+            $orders = Order::where('user_id', Auth::id())->where('status', 'Đã Hủy')->orderBy('id', 'DESC')->paginate(8);
         } elseif ($request->status == 'dang-xu-ly') {
-            $orders = Order::where('user_id', Auth::id())->where('status', 'Đang xử lý')->orderBy('id', 'DESC')->paginate(8);
+            $orders = Order::where('user_id', Auth::id())->where('status', 'Đang Xử Lý')->orderBy('id', 'DESC')->paginate(8);
+        } elseif ($request->status == 'hoan-thanh') {
+            $orders = Order::where('user_id', Auth::id())->where('status', 'Hoàn Thành')->orderBy('id', 'DESC')->paginate(8);
         } else {
             $orders = Order::where('user_id', Auth::id())->orderBy('id', 'DESC')->paginate(8);
         }

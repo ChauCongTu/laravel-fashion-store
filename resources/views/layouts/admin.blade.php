@@ -46,7 +46,7 @@
         <aside class="menu-sidebar2">
             <div class="logo">
                 <a href="{{ route('admin') }}" class="h3 fw-bold text-white">
-                    CQN Admin
+                    Admin Panel
                 </a>
             </div>
             <div class="menu-sidebar2__content js-scrollbar1">

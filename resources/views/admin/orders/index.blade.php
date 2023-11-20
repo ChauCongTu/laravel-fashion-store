@@ -21,12 +21,12 @@
                         <div class="filter d-flex justify-content-end">
                             <form action="{{ route('admin.order') }}" method="get" class="d-flex align-items-center">
                                 <select name="status" class="form-control pe-5">
-                                    <option value="all">Tất cả đơn đặt hàng</option>
-                                    <option {{ $status == 'Đang xử lý' ? 'selected' : false }}>Đang xử lý</option>
-                                    <option {{ $status == 'Đang giao hàng' ? 'selected' : false }}>Đang giao hàng</option>
-                                    <option {{ $status == 'Chờ lấy hàng' ? 'selected' : false }}>Chờ lấy hàng</option>
-                                    <option {{ $status == 'Hoàn thành' ? 'selected' : false }}>Hoàn thành</option>
-                                    <option {{ $status == 'Đã hủy' ? 'selected' : false }}>Đã hủy</option>
+                                    <option value="all">Tất Cả Đơn Hàng</option>
+                                    <option {{ $status == 'Đang Xử Lý' ? 'selected' : false }}>Đang Xử Lý</option>
+                                    <option {{ $status == 'Đang Giao Hàng' ? 'selected' : false }}>Đang Giao Hàng</option>
+                                    <option {{ $status == 'Đã Giao Hàng' ? 'selected' : false }}>Đã Giao Hàng</option>
+                                    <option {{ $status == 'Hoàn Thành' ? 'selected' : false }}>Hoàn Thành</option>
+                                    <option {{ $status == 'Đã Hủy' ? 'selected' : false }}>Đã Hủy</option>
                                 </select>
                                 <button class="btn btn-danger rounded-0">Lọc</button>
                             </form>
@@ -37,7 +37,7 @@
                     <table class="table table-data2">
                         <thead>
                             <tr>
-                                <th>CODE</th>
+                                <th>Mã Đơn Hàng</th>
                                 <th>Khách hàng</th>
                                 <th>Số tiền</th>
                                 <th>Hình thức thanh toán</th>
@@ -70,13 +70,13 @@
                                             : '<span class="fw-bold text-danger">Chưa thanh toán</span>' !!}
                                     </td>
                                     <td>
-                                        @if ($order->status == 'Đang xử lý' || $order->status == 'Đang giao hàng' || $order->status == 'Chờ lấy hàng')
+                                        @if ($order->status == 'Đang Xử Lý' || $order->status == 'Đang Giao Hàng' || $order->status == 'Đã Giao Hàng')
                                             <div class="cl2 text-primary fw-bold">{{ $order->status }}</div>
                                         @endif
-                                        @if ($order->status == 'Hoàn thành')
+                                        @if ($order->status == 'Hoàn Thành')
                                             <div class="cl2 text-success fw-bold">{{ $order->status }}</div>
                                         @endif
-                                        @if ($order->status == 'Đã hủy')
+                                        @if ($order->status == 'Đã Hủy')
                                             <div class="cl2 text-danger fw-bold">{{ $order->status }}</div>
                                         @endif
                                     </td>

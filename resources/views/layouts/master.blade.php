@@ -150,7 +150,7 @@
                                     <li><a class="dropdown-item py-2" href="{{ route('wishlist') }}"><i
                                                 class="fa fa-heart me-3"></i>Wishlist</a></li>
                                     @if (Auth::user()->role == 'admin')
-                                        <li><a class="dropdown-item py-2" href="#"><i
+                                        <li><a class="dropdown-item py-2" href="{{ route('admin') }}"><i
                                                     class="fa fa-gears me-3"></i>Bảng điều khiển</a></li>
                                     @endif
                                     <div class="border my-2"></div>
@@ -226,7 +226,8 @@
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item py-2" href="{{ route('users.info') }}">Thông tin cá nhân</a></li>
+                                    <li><a class="dropdown-item py-2" href="{{ route('users.info') }}">Thông tin cá
+                                            nhân</a></li>
                                     <li><a class="dropdown-item py-2" href="{{ route('user.orders') }}">Quản lý đơn
                                             hàng</a></li>
                                     <li><a class="dropdown-item py-2" href="#">Wishlist</a></li>
@@ -639,6 +640,38 @@
     </script>
     @yield('script')
     <script src="{{ asset('js/slick-custom.js') }}"></script>
+    <!-- Messenger Plugin chat Code -->
+    <div id="fb-root"></div>
+
+    <!-- Your Plugin chat code -->
+    <div id="fb-customer-chat" class="fb-customerchat">
+    </div>
+
+    <script>
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "310486072756059");
+        chatbox.setAttribute("attribution", "biz_inbox");
+    </script>
+
+    <!-- Your SDK code -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml: true,
+                version: 'v17.0'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
 
 </body>

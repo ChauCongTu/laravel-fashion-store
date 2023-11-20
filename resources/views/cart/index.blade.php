@@ -93,24 +93,7 @@
                             </div>
                         </div>
                     </form>
-                    <div class="bg0">
-                        <div class="m-r--38 m-lr-0-xl">
-                            <div class="border mt-2 rounded-3 p-3 w-100">
-                                <div class="h5 text-danger">Lưu ý khi sử dụng mã giảm giá:</div>
-                                <p>&#8226; Bạn có thể <b>sử dụng nhiều mã giảm giá trên một đơn hàng</b> (Hãy săn thật nhiều
-                                    mã giảm giá
-                                    áp dụng 1 lần để nhận <b>siêu ưu đãi</b> nhé bạn ^^)</p>
-                                <p>&#8226; Mỗi người chỉ có thể dùng mã giảm giá một lần</p>
-                                <p>&#8226; Bạn chỉ có thể dùng mã giảm giá khi bạn đã đăng nhập</p>
-                                <p>&#8226; Sau khi bạn sử dụng, mã giảm giá đó sẽ <b>ngay lập tức hết giá trị</b> với bạn.
-                                    Hãy cân
-                                    nhắc cẩn thận trước khi sử dụng</p>
-                                <p>&#8226; Sau khi sử dụng mã giảm giá, bạn <b>ko thể thay đổi đơn hàng</b>. Nếu không
-                                    coupon sẽ mất tác
-                                    dụng</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">

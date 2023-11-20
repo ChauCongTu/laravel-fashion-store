@@ -16,7 +16,7 @@ class OrderManagementController extends Controller
         $query = Order::orderBy('created_at', 'DESC');
 
         if ($status !== null) {
-            $validStatuses = ['Đang xử lý', 'Đang giao hàng', 'Chờ lấy hàng', 'Hoàn thành', 'Đã hủy'];
+            $validStatuses = ['Đang Xử Lý', 'Đang Giao Hàng', 'Đã Giao Hàng', 'Hoàn Thành', 'Đã Hủy'];
             if (in_array($status, $validStatuses)) {
                 $query->where('status', $status);
             }
@@ -35,8 +35,8 @@ class OrderManagementController extends Controller
     public function updateStatus(int $id)
     {
         $order = Order::find($id);
-        if ($order->status == 'Đang xử lý') {
-            $order->status = 'Đang giao hàng';
+        if ($order->status == 'Đang Xử Lý') {
+            $order->status = 'Đang Giao Hàng';
             $order->load('detail.product');
             foreach ($order->detail as $detail) {
                 $product = $detail->product;
@@ -47,13 +47,8 @@ class OrderManagementController extends Controller
             }
             $order->save();
             return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công');
-        } elseif ($order->status == 'Đang giao hàng') {
-            $order->status = 'Chờ lấy hàng';
-            $order->save();
-            return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công');
-        } elseif ($order->status == 'Chờ lấy hàng') {
-            $order->status = 'Hoàn thành';
-            $order->payment_status = 'Đã thanh toán';
+        } elseif ($order->status == 'Đang Giao Hàng') {
+            $order->status = 'Đã Giao Hàng';
             $order->save();
             return back()->with('success', 'Cập nhật trạng thái đơn hàng thành công');
         }

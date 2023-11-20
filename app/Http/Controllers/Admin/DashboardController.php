@@ -85,11 +85,11 @@ class DashboardController extends Controller
 
         // Order status
         $orderStatus = [];
-        $orderStatus[] = Order::where('status', 'Đang xử lý')->count();
-        $orderStatus[] = Order::where('status', 'Đang giao hàng')->count();
-        $orderStatus[] = Order::where('status', 'Chờ lấy hàng')->count();
-        $orderStatus[] = Order::where('status', 'Hoàn thành')->count();
-        $orderStatus[] = Order::where('status', 'Đã hủy')->count();
+        $orderStatus[] = Order::where('status', 'Đang Xử Lý')->count();
+        $orderStatus[] = Order::where('status', 'Đang Giao Hàng')->count();
+        $orderStatus[] = Order::where('status', 'Đã Giao Hàng')->count();
+        $orderStatus[] = Order::where('status', 'Hoàn Thành')->count();
+        $orderStatus[] = Order::where('status', 'Đã Hủy')->count();
 
         // Top product seller
         $hotProduct = [];

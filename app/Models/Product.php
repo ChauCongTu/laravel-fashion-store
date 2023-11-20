@@ -23,6 +23,7 @@ class Product extends Model
         'stock',
         'price',
         'discount',
+        'discount_until',
         'is_featured',
         'status',
         'cat_id',

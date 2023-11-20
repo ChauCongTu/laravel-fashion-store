@@ -143,11 +143,16 @@
                                 class="btn btn-success px-4 mt-2 me-2">
                                 <i class="fa-solid fa-phone me-2"></i>Liên hệ hỗ trợ
                             </a>
-                            @if ($order->status != 'Hoàn thành' && $order->status != 'Đã hủy')
+                            @if ($order->status != 'Hoàn Thành' && $order->status != 'Đã Hủy')
+                                <button data-bs-toggle="modal" data-bs-target="#complete"
+                                    class="btn btn-outline-success px-4 me-2 mt-2">
+                                    <i class="fa-solid fa-check me-2"></i>
+                                    Hoàn Thành
+                                </button>
                                 <button data-bs-toggle="modal" data-bs-target="#cancel"
                                     class="btn btn-outline-danger px-4 mt-2">
                                     <i class="fa-solid fa-ban me-2"></i>
-                                    Hủy đơn hàng
+                                    Hủy Đơn Hàng
                                 </button>
                             @endif
                         </div>
@@ -157,8 +162,8 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade m-t-75" style="z-index: 10000" id="cancel" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade m-t-75" style="z-index: 10000" id="cancel" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <form action="{{ route('user.orders.changeStatus', ['code' => $order->code]) }}" method="post">
@@ -169,9 +174,31 @@
                             <img src="{{ asset('images/error.gif') }}" width="120px" alt="">
                         </h2>
                         <input type="hidden" name="status" value="Đã hủy">
-                        <label for="reason" class="h5 text-center cl2">Bạn đang yêu cầu hủy đơn hàng, hãy cho biết lý
+                        <label for="reason" class="h5 text-center cl2">Bạn đang yêu cầu hủy đơn hàng.<br/> Vui lòng cho chúng tôi biết lý
                             do:</label>
                         <textarea name="reason" rows="4" class="form-control"></textarea>
+                    </div>
+                    <div class="mb-3 d-flex justify-content-end pe-3">
+                        <button type="button" class="btn btn-outline-primary me-3" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Xác nhận</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade m-t-75" style="z-index: 10000" id="complete" tabindex="-1"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('user.orders.changeStatus', ['code' => $order->code]) }}" method="post">
+                    <div class="modal-body my-3">
+                        @csrf
+                        @method('PUT')
+                        <input type="hidden" name="status" value="Hoàn Thành">
+                        <div class="fw-bold">Xác nhận hoàn thành đơn.</div>
+                        <p class="my-2">
+                            Lưu ý: Chỉ xác nhận hoàn thành sau khi bạn đã nhận và kiểm tra hàng.
+                        </p>
                     </div>
                     <div class="mb-3 d-flex justify-content-end pe-3">
                         <button type="button" class="btn btn-outline-primary me-3" data-bs-dismiss="modal">Hủy</button>

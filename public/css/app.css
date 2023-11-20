@@ -154,4 +154,68 @@ a,
   display: block;
 }
 
+.content-sp {
+  height: 110px;
+}
+
+.blur {
+  z-index: 999999;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #333;
+  opacity: 0.3;
+}
+
+.search-modal {
+  position: fixed;
+  z-index: 1000000;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 50%;
+  background-color: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 20px;
+}
+.search-modal .search-home {
+  display: flex;
+  position: relative;
+  width: 100%;
+  border: 1px solid #2980b9;
+  padding: 10px 30px;
+  border-radius: 15rem;
+  size: 14px;
+}
+.search-modal .search-home input {
+  background-color: transparent;
+  size: 16px;
+  width: 100%;
+}
+.search-modal .search-home button {
+  background-color: #dc3445;
+  background-color: #dc3445;
+  position: absolute;
+  right: 0;
+  height: 100%;
+  top: 0;
+  width: 60px;
+  border-radius: 0 15rem 15rem 0;
+  color: #fff;
+}
+.search-modal .list-search {
+  max-height: 400px;
+  overflow-y: scroll;
+  margin-bottom: 20px;
+}
+.search-modal .list-search a {
+  padding: 10px;
+  border-radius: 15px;
+}
+.search-modal .list-search a:hover {
+  background-color: rgb(252, 241, 241);
+}
+
 /*# sourceMappingURL=app.css.map */
